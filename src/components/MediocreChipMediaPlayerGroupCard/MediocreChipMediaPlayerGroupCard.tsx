@@ -36,6 +36,9 @@ const Chips = styled.div`
   overflow-x: auto !important;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Chip = styled.div<{ $inactive: boolean; $loading: boolean }>`
   display: flex;
@@ -138,13 +141,6 @@ export const MediocreChipMediaPlayerGroupCard = () => {
 
   return (
     <Fragment>
-      <style>
-        {`
-        .chips::-webkit-scrollbar {
-          display: none;
-        }
-        `}
-      </style>
       <Chips className="chips">
         {players.map((player) => (
           <Chip
