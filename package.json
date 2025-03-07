@@ -1,0 +1,39 @@
+{
+  "name": "my-little-janky-hass-cards",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/my-lib.umd.cjs",
+  "module": "./dist/my-lib.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "custom-card-helpers": "^1.9.0",
+    "mdi-preact": "^9.4.0",
+    "preact": "^10.25.3",
+    "preact-custom-element": "^4.3.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.9.3",
+    "eslint": "^8.57.1",
+    "eslint-config-preact": "^1.5.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.0.4"
+  },
+  "eslintConfig": {
+    "extends": "preact"
+  }
+}
