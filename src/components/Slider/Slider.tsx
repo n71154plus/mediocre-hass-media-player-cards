@@ -3,6 +3,7 @@ import { Fragment } from "preact/jsx-runtime";
 export type SliderProps = {
   min: number;
   max: number;
+  step: number;
   value: number;
   thumbSize?: "xsmall" | "small" | "medium";
   onChange: (value: number) => void;
@@ -11,6 +12,7 @@ export type SliderProps = {
 export const Slider = ({
   min,
   max,
+  step,
   value,
   thumbSize,
   onChange,
@@ -30,11 +32,6 @@ export const Slider = ({
       --track-height: 4px;
       --brightness-hover: 110%;
       --brightness-down: 90%;
-    }
-
-    .slider:hover,
-    .slider:focus {
-      color: var(--accent-color);
     }
 
     .thumb-xsmall {
@@ -202,6 +199,7 @@ export const Slider = ({
         type="range"
         min={min}
         max={max}
+        step={step}
         value={value}
         onInput={(e) =>
           onChange(parseFloat((e.target as HTMLInputElement).value))

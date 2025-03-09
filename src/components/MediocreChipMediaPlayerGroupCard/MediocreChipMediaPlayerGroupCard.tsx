@@ -51,7 +51,7 @@ const Chip = styled.div<{ $inactive: boolean; $loading: boolean }>`
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
-  background-color: var(--secondary-background-color);
+  background-color: var(--card-background-color);
   color: var(--primary-text-color);
   margin-bottom: 5px;
   margin-right: 5px;
