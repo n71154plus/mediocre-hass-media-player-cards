@@ -21,12 +21,15 @@ const FriendlyNameText = styled.span`
 export const PlayerInfo = () => {
   const { hass, config, rootElement } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
-  const { entity_id } = config;
+  const { entity_id, speaker_group } = config;
   const {
     friendly_name: playerName,
     icon,
     device_class: deviceClass,
   } = hass.states[entity_id].attributes;
+  const groupMembers =
+    hass.states[speaker_group?.entity_id ?? entity_id]?.attributes
+      ?.group_members;
   const mdiIcon = getIcon({ icon, deviceClass });
 
   const handleMoreInfo = useCallback(() => {
@@ -39,6 +42,9 @@ export const PlayerInfo = () => {
     <PlayerInfoWrap>
       <IconButton Icon={mdiIcon} onClick={handleMoreInfo} size={"xx-small"} />
       <FriendlyNameText>{playerName}</FriendlyNameText>
+      {groupMembers && groupMembers.length > 1 && (
+        <FriendlyNameText>+{groupMembers.length - 1}</FriendlyNameText>
+      )}
     </PlayerInfoWrap>
   );
 };
