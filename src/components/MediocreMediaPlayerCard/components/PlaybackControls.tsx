@@ -1,21 +1,8 @@
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
 import styled from "styled-components";
-import PauseCircleIcon from "mdi-preact/PauseCircleIcon";
-import PlayCircleIcon from "mdi-preact/PlayCircleIcon";
-import SkipPreviousIcon from "mdi-preact/SkipPreviousIcon";
-import SkipNextIcon from "mdi-preact/SkipNextIcon";
-import ShuffleVariantIcon from "mdi-preact/ShuffleVariantIcon";
-import ShuffleDisabledIcon from "mdi-preact/ShuffleDisabledIcon";
-import RepeatOnceIcon from "mdi-preact/RepeatOnceIcon";
-import RepeatIcon from "mdi-preact/RepeatIcon";
-import RepeatOffIcon from "mdi-preact/RepeatOffIcon";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
 import { MediocreMediaPlayerCardConfig } from "../config";
-import VolumeOffIcon from "mdi-preact/VolumeOffIcon";
-import VolumeMediumIcon from "mdi-preact/VolumeMediumIcon";
-import VolumeHighIcon from "mdi-preact/VolumeHighIcon";
-import ChevronLeftIcon from "mdi-preact/ChevronLeftIcon";
 import { Fragment } from "preact/jsx-runtime";
 import { Slider } from "../../Slider";
 
@@ -110,9 +97,9 @@ export const PlaybackControls = () => {
   }, [volumeMuted]);
 
   const VolumeIcon = useMemo(() => {
-    if (volume === 0 || volumeMuted) return VolumeOffIcon;
-    if (volume < 0.5) return VolumeMediumIcon;
-    return VolumeHighIcon;
+    if (volume === 0 || volumeMuted) return "mdi:volume-off";
+    if (volume < 0.5) return "mdi:volume-medium";
+    return "mdi:volume-high";
   }, [volume, volumeMuted]);
 
   return (
@@ -123,29 +110,33 @@ export const PlaybackControls = () => {
             size="x-small"
             onClick={toggleShuffle}
             muted={!shuffle}
-            Icon={shuffle ? ShuffleVariantIcon : ShuffleDisabledIcon}
+            Icon={shuffle ? "mdi:shuffle-variant" : "mdi:shuffle-disabled"}
           />
           <ControlButton
             size="small"
             onClick={previousTrack}
-            Icon={SkipPreviousIcon}
+            Icon={"mdi:skip-previous"}
           />
           <ControlButton
             size="medium"
             onClick={togglePlayback}
-            Icon={playing ? PauseCircleIcon : PlayCircleIcon}
+            Icon={playing ? "mdi:pause-circle" : "mdi:play-circle"}
           />
-          <ControlButton size="small" onClick={nextTrack} Icon={SkipNextIcon} />
+          <ControlButton
+            size="small"
+            onClick={nextTrack}
+            Icon={"mdi:skip-next"}
+          />
           <ControlButton
             size="x-small"
             onClick={toggleRepeat}
             muted={repeat === "off"}
             Icon={
               repeat === "one"
-                ? RepeatOnceIcon
+                ? "mdi:repeat-once"
                 : repeat === "all"
-                ? RepeatIcon
-                : RepeatOffIcon
+                ? "mdi:repeat"
+                : "mdi:repeat-off"
             }
           />
         </Fragment>
@@ -178,7 +169,7 @@ export const PlaybackControls = () => {
           <ControlButton
             size="small"
             onClick={() => setShowVolumeSlider(!showVolumeSlider)}
-            Icon={ChevronLeftIcon}
+            Icon={"mdi:chevron-left"}
           />
         )}
       </VolumeTriggerWrap>
