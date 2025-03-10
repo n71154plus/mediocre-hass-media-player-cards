@@ -12,6 +12,7 @@ const TitleText = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--primary-text-color, #333);
+  margin-right: 32px;
 `;
 
 const ArtistText = styled.p`
@@ -21,6 +22,7 @@ const ArtistText = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-right: 32px;
 `;
 
 export const MetaInfo = () => {

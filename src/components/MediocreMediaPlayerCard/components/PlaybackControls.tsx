@@ -26,6 +26,7 @@ const PlaybackControlsWrap = styled.div`
   justify-content: flex-start;
   margin-top: auto;
   margin-left: -4px; // compensate for icon button padding
+  margin-bottom: -4px; // compensate for icon button padding
 `;
 
 const VolumeTriggerWrap = styled.div`
@@ -130,7 +131,7 @@ export const PlaybackControls = () => {
             Icon={SkipPreviousIcon}
           />
           <ControlButton
-            size="small"
+            size="medium"
             onClick={togglePlayback}
             Icon={playing ? PauseCircleIcon : PlayCircleIcon}
           />

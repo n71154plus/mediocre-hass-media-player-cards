@@ -9,7 +9,6 @@ const PlayerInfoWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 2px;
   gap: 4px;
 `;
 const FriendlyNameText = styled.span`

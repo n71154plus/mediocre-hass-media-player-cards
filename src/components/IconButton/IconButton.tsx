@@ -2,17 +2,25 @@ import styled from "styled-components";
 import { MdiReactIconComponentType } from "mdi-preact";
 import { Fragment } from "preact/jsx-runtime";
 
+export type ButtonSize =
+  | "xx-small"
+  | "x-small"
+  | "small"
+  | "medium"
+  | "large"
+  | "x-large";
+
 export type IconButtonProps = {
   Icon: MdiReactIconComponentType | string;
   onClick: () => void;
-  size?: "xx-small" | "x-small" | "small" | "medium" | "large";
+  size?: ButtonSize;
   disabled?: boolean;
   className?: string;
 };
 
 const Button = styled.button<{
   $disabled: boolean;
-  $size: "xx-small" | "x-small" | "small" | "medium" | "large";
+  $size: ButtonSize;
 }>`
   background: none;
   border: none;
@@ -23,7 +31,7 @@ const Button = styled.button<{
   border-radius: 50%;
   transition: background-color 0.2s;
   padding: ${(props) => (props.$size === "xx-small" ? 0 : 4)}px;
-  min-width: ${(props) => getSize(props.$size)}px;
+  min-width: ${(props) => getButtonSize(props.$size)}px;
   aspect-ratio: 1;
   color: ${(props) =>
     props.disabled
@@ -38,7 +46,8 @@ const Button = styled.button<{
     background-color: var(--divider-color, rgba(0, 0, 0, 0.1));
   }
   > ha-icon {
-    --mdc-icon-size: ${(props) => getSize(props.$size)}px;
+    --mdc-icon-ButtonSize: ${(props) => getButtonSize(props.$size)}px;
+    width: ${(props) => getButtonSize(props.$size)}px;
     display: flex;
   }
 `;
@@ -50,7 +59,7 @@ export const IconButton = ({
   disabled = false,
   className,
 }: IconButtonProps) => {
-  const width = getSize(size);
+  const width = getButtonSize(size);
   return (
     <Button
       onClick={onClick}
@@ -71,9 +80,7 @@ export const IconButton = ({
   );
 };
 
-const getSize = (
-  size: "xx-small" | "x-small" | "small" | "medium" | "large"
-) => {
+const getButtonSize = (size: ButtonSize) => {
   switch (size) {
     case "xx-small":
       return 12;
@@ -82,8 +89,10 @@ const getSize = (
     case "small":
       return 24;
     case "medium":
-      return 48;
+      return 32;
     case "large":
+      return 48;
+    case "x-large":
       return 80;
   }
 };
