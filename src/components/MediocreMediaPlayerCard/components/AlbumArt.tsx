@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext, useCallback } from "preact/hooks";
 import styled from "styled-components";
 import { Vibrant } from "node-vibrant/browser";
-import DiscIcon from "mdi-preact/DiscIcon";
 import { CardContext, CardContextType } from "../../../utils";
 import { MediocreMediaPlayerCardConfig } from "../config";
 import { fireEvent } from "custom-card-helpers";
+import { Icon } from "../../Icon";
 
 const AlbumArtContainer = styled.div<{ shadowColor?: string }>`
   width: 100px;
@@ -90,7 +90,7 @@ export const AlbumArt = () => {
         />
       ) : (
         <NoAlbumArt>
-          <DiscIcon size={84} />
+          <Icon size="x-large" Icon="mdi:disc" />
         </NoAlbumArt>
       )}
     </AlbumArtContainer>

@@ -1,14 +1,11 @@
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
 import styled from "styled-components";
 import type { MediocreMediaPlayerCardConfig } from "../config";
-import LinkVariantOffIcon from "mdi-preact/LinkVariantOffIcon";
-import VolumeHighIcon from "mdi-preact/VolumeHighIcon";
 import { Slider } from "../../Slider";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
-import CloseIcon from "mdi-preact/CloseIcon";
-import PlusIcon from "mdi-preact/PlusIcon";
 import { Fragment } from "preact/jsx-runtime";
+import { Icon } from "../../Icon";
 
 const SpeakerGroupContainer = styled.div`
   display: flex;
@@ -190,7 +187,7 @@ export const SpeakerGrouping = () => {
                   </SpeakerName>
                   {speaker.isGrouped && (
                     <VolumeControl>
-                      <VolumeHighIcon size={16} />
+                      <Icon size="x-small" Icon="mdi:volume-high" />
                       <Slider
                         min={0}
                         max={1}
@@ -221,8 +218,8 @@ export const SpeakerGrouping = () => {
               }
             >
               {speaker.name}
-              {speaker.isGrouped && <CloseIcon size={18} />}
-              {!speaker.isGrouped && <PlusIcon size={18} />}
+              {speaker.isGrouped && <Icon size="x-small" Icon="mdi:close" />}
+              {!speaker.isGrouped && <Icon size="x-small" Icon="mdi:plus" />}
             </Chip>
           ))}
       </Chips>

@@ -1,10 +1,8 @@
-import CloseIcon from "mdi-preact/CloseIcon";
-import PlusIcon from "mdi-preact/PlusIcon";
-
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
 import { createContext, Fragment } from "preact";
 import { HomeAssistant } from "custom-card-helpers";
 import styled from "styled-components";
+import { Icon } from "../Icon";
 
 export type MediocreChipMediaPlayerGroupCardConfig = {
   entity_id: string;
@@ -156,8 +154,8 @@ export const MediocreChipMediaPlayerGroupCard = () => {
             }}
           >
             {player.friendly_name}
-            {player.isGrouped && <CloseIcon size={18} />}
-            {!player.isGrouped && <PlusIcon size={18} />}
+            {player.isGrouped && <Icon size="x-small" Icon="mdi:close" />}
+            {!player.isGrouped && <Icon size="x-small" Icon="mdi:plus" />}
           </Chip>
         ))}
       </Chips>
