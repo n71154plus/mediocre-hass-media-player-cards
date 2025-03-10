@@ -17,7 +17,7 @@ import { IconButton } from "../IconButton";
 
 const CardContent = styled.div<{ isOn: boolean }>`
   display: flex;
-  gap: 16px;
+  gap: 14px;
   padding: 16px;
   opacity: ${(props) => (props.isOn ? 1 : 0.7)};
   transition: opacity 0.3s ease;
@@ -35,8 +35,8 @@ const ContentContainer = styled.div`
 
 const GroupButton = styled.div`
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
 `;
 
 export const MediocreMediaPlayerCard = () => {
