@@ -1,15 +1,6 @@
 import { useCallback, useContext } from "preact/hooks";
 import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
 import styled from "styled-components";
-import PauseCircleIcon from "mdi-preact/PauseCircleIcon";
-import PlayCircleIcon from "mdi-preact/PlayCircleIcon";
-import SkipPreviousIcon from "mdi-preact/SkipPreviousIcon";
-import SkipNextIcon from "mdi-preact/SkipNextIcon";
-import ShuffleVariantIcon from "mdi-preact/ShuffleVariantIcon";
-import ShuffleDisabledIcon from "mdi-preact/ShuffleDisabledIcon";
-import RepeatOnceIcon from "mdi-preact/RepeatOnceIcon";
-import RepeatIcon from "mdi-preact/RepeatIcon";
-import RepeatOffIcon from "mdi-preact/RepeatOffIcon";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
 
@@ -69,28 +60,28 @@ export const PlaybackControls = () => {
       <IconButton
         size="small"
         onClick={toggleShuffle}
-        Icon={shuffle ? ShuffleVariantIcon : ShuffleDisabledIcon}
+        Icon={shuffle ? "mdi:shuffle-variant" : "mdi:shuffle-disabled"}
       />
       <IconButton
         size="medium"
         onClick={previousTrack}
-        Icon={SkipPreviousIcon}
+        Icon={"mdi:skip-previous"}
       />
       <IconButton
         size="large"
         onClick={togglePlayback}
-        Icon={playing ? PauseCircleIcon : PlayCircleIcon}
+        Icon={playing ? "mdi:pause-circle" : "mdi:play-circle"}
       />
-      <IconButton size="medium" onClick={nextTrack} Icon={SkipNextIcon} />
+      <IconButton size="medium" onClick={nextTrack} Icon={"mdi:skip-next"} />
       <IconButton
         size="small"
         onClick={toggleRepeat}
         Icon={
           repeat === "one"
-            ? RepeatOnceIcon
+            ? "mdi:repeat-once"
             : repeat === "all"
-            ? RepeatIcon
-            : RepeatOffIcon
+            ? "mdi:repeat"
+            : "mdi:repeat-off"
         }
       />
     </PlaybackControlsWrap>
