@@ -9,7 +9,6 @@ import {
   PlayerInfo,
   SpeakerGrouping,
 } from "./components";
-import {} from "./components/SpeakerGrouping";
 import SpeakersIcon from "mdi-preact/SpeakersIcon";
 import { IconButton } from "../IconButton";
 
@@ -81,7 +80,7 @@ export const MediocreMediaPlayerCard = () => {
             <IconButton
               size="x-small"
               onClick={toggleGrouping}
-              Icon={SpeakersIcon}
+              Icon={"mdi:speaker-multiple"}
             />
           </GroupButton>
         )}
