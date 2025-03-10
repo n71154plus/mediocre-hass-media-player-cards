@@ -46,7 +46,7 @@ const Button = styled.button<{
     background-color: var(--divider-color, rgba(0, 0, 0, 0.1));
   }
   > ha-icon {
-    --mdc-icon-ButtonSize: ${(props) => getButtonSize(props.$size)}px;
+    --mdc-icon-size: ${(props) => getButtonSize(props.$size)}px;
     width: ${(props) => getButtonSize(props.$size)}px;
     display: flex;
   }
