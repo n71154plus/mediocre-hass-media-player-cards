@@ -14,7 +14,8 @@ import { Fragment } from "preact/jsx-runtime";
 const SpeakerGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 8px 16px 16px;
+  padding-top: 8px;
+  padding-bottom: 16px;
   border-top: 0.5px solid var(--divider-color, rgba(0, 0, 0, 0.12));
   gap: 12px;
 `;
@@ -24,12 +25,16 @@ const GroupTitle = styled.div`
   font-weight: 500;
   color: var(--primary-text-color);
   margin-top: 8px;
+  margin-right: 16px;
+  margin-left: 16px;
 `;
 
 const SpeakerList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-left: 16px;
+  margin-right: 16px;
 `;
 
 const SpeakerItem = styled.div`
@@ -75,7 +80,6 @@ const Chip = styled.div<{ $loading: boolean }>`
   border-radius: 16px;
   color: var(--card-background-color);
   background-color: var(--primary-text-color);
-  margin-bottom: 5px;
   margin-right: 5px;
   justify-content: space-between;
   align-items: center;
@@ -83,6 +87,12 @@ const Chip = styled.div<{ $loading: boolean }>`
   text-wrap: nowrap;
   cursor: pointer;
   opacity: ${(props) => (props.$loading ? 0.3 : 0.8)};
+  &:first-child {
+    margin-left: 16px;
+  }
+  &:last-child {
+    margin-right: 16px;
+  }
 `;
 
 export const SpeakerGrouping = () => {

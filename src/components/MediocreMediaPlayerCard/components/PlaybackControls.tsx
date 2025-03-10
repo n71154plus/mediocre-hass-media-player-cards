@@ -25,8 +25,8 @@ const PlaybackControlsWrap = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-top: auto;
+  height: 36px; // fixed to prevent jumping
   margin-left: -4px; // compensate for icon button padding
-  margin-bottom: -4px; // compensate for icon button padding
 `;
 
 const VolumeTriggerWrap = styled.div`
