@@ -183,7 +183,7 @@ export const SpeakerGrouping = () => {
                     onClick={() =>
                       handleToggleGroup(speaker.entity_id, speaker.isGrouped)
                     }
-                    Icon={LinkVariantOffIcon}
+                    Icon={"mdi:link-variant-off"}
                   />
                   <SpeakerName isMaster={speaker.isMainSpeaker}>
                     {speaker.name} {speaker.isMainSpeaker && "(Master)"}

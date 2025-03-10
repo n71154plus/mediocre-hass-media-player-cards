@@ -9,7 +9,6 @@ import {
   PlayerInfo,
   SpeakerGrouping,
 } from "./components";
-import SpeakersIcon from "mdi-preact/SpeakersIcon";
 import { IconButton } from "../IconButton";
 
 const CardContent = styled.div<{ isOn: boolean }>`
