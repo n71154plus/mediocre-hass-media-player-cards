@@ -35,8 +35,8 @@ const ContentContainer = styled.div`
 
 const GroupButton = styled.div`
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 16px;
+  right: 16px;
 `;
 
 export const MediocreMediaPlayerCard = () => {

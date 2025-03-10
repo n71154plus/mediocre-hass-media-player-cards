@@ -39,6 +39,10 @@ const VolumeContainer = styled.div`
   transition: all 0.3s ease;
 `;
 
+const ControlButton = styled(IconButton)<{ muted?: boolean }>`
+  opacity: ${(props) => (props.muted ? 0.8 : 1)}; // reduce opacity if muted
+`;
+
 export const PlaybackControls = () => {
   const { hass, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
@@ -114,25 +118,27 @@ export const PlaybackControls = () => {
     <PlaybackControlsWrap>
       {!showVolumeSlider ? (
         <Fragment>
-          <IconButton
+          <ControlButton
             size="x-small"
             onClick={toggleShuffle}
+            muted={!shuffle}
             Icon={shuffle ? ShuffleVariantIcon : ShuffleDisabledIcon}
           />
-          <IconButton
+          <ControlButton
             size="small"
             onClick={previousTrack}
             Icon={SkipPreviousIcon}
           />
-          <IconButton
+          <ControlButton
             size="small"
             onClick={togglePlayback}
             Icon={playing ? PauseCircleIcon : PlayCircleIcon}
           />
-          <IconButton size="small" onClick={nextTrack} Icon={SkipNextIcon} />
-          <IconButton
+          <ControlButton size="small" onClick={nextTrack} Icon={SkipNextIcon} />
+          <ControlButton
             size="x-small"
             onClick={toggleRepeat}
+            muted={repeat === "off"}
             Icon={
               repeat === "one"
                 ? RepeatOnceIcon
@@ -144,7 +150,7 @@ export const PlaybackControls = () => {
         </Fragment>
       ) : (
         <VolumeContainer>
-          <IconButton
+          <ControlButton
             size="small"
             onClick={handleToggleMute}
             Icon={VolumeIcon}
@@ -162,13 +168,13 @@ export const PlaybackControls = () => {
       )}
       <VolumeTriggerWrap>
         {!showVolumeSlider ? (
-          <IconButton
+          <ControlButton
             size="small"
             onClick={() => setShowVolumeSlider(!showVolumeSlider)}
             Icon={VolumeIcon}
           />
         ) : (
-          <IconButton
+          <ControlButton
             size="small"
             onClick={() => setShowVolumeSlider(!showVolumeSlider)}
             Icon={ChevronLeftIcon}

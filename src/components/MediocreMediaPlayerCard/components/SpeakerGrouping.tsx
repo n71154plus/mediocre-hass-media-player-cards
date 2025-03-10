@@ -15,7 +15,7 @@ const SpeakerGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 8px 16px 16px;
-  border-top: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+  border-top: 0.5px solid var(--divider-color, rgba(0, 0, 0, 0.12));
   gap: 12px;
 `;
 

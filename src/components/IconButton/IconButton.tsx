@@ -7,6 +7,7 @@ export type IconButtonProps = {
   onClick: () => void;
   size?: "xx-small" | "x-small" | "small" | "medium" | "large";
   disabled?: boolean;
+  className?: string;
 };
 
 const Button = styled.button<{
@@ -47,6 +48,7 @@ export const IconButton = ({
   onClick,
   size = "medium",
   disabled = false,
+  className,
 }: IconButtonProps) => {
   const width = getSize(size);
   return (
@@ -55,6 +57,7 @@ export const IconButton = ({
       disabled={disabled}
       $disabled={disabled}
       $size={size}
+      className={className}
     >
       {typeof Icon === "string" ? (
         <Fragment>

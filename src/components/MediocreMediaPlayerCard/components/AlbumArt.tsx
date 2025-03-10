@@ -90,7 +90,7 @@ export const AlbumArt = () => {
         />
       ) : (
         <NoAlbumArt>
-          <DiscIcon size={24} />
+          <DiscIcon size={84} />
         </NoAlbumArt>
       )}
     </AlbumArtContainer>
