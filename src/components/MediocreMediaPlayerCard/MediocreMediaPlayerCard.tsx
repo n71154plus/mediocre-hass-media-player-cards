@@ -1,5 +1,3 @@
-"use client";
-
 import { CardContext, type CardContextType } from "../../utils";
 import { useContext, useState } from "preact/hooks";
 import type { MediocreMediaPlayerCardConfig } from "./config";

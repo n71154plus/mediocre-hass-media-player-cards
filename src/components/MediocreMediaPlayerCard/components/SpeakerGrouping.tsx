@@ -1,7 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
 import styled from "styled-components";
 import type { MediocreMediaPlayerCardConfig } from "../config";
-import LinkVariantIcon from "mdi-preact/LinkVariantIcon";
 import LinkVariantOffIcon from "mdi-preact/LinkVariantOffIcon";
 import VolumeHighIcon from "mdi-preact/VolumeHighIcon";
 import { Slider } from "../../Slider";
