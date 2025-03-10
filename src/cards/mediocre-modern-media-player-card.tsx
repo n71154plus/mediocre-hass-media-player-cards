@@ -1,32 +1,32 @@
 import { render } from "preact";
 import {
-  MediocreMediaPlayerCard,
-  MediocreMediaPlayerCardConfig,
+  MediocreModernMediaPlayerCard,
+  MediocreModernMediaPlayerCardConfig,
 } from "../components";
 import { CardContextProvider } from "../utils";
 
-class MediocreMediaPlayerCardWrapper extends HTMLElement {
-  config = null;
+class MediocreModernMediaPlayerCardWrapper extends HTMLElement {
+  config: MediocreModernMediaPlayerCardConfig = null;
   content: HTMLElement = null;
 
   set hass(hass) {
     // Initialize the content if it's not there yet.
     if (!this.content) {
       this.innerHTML = `
-          <div></div>
+          <div class="card-content"></div>
       `;
       this.content = this.querySelector("div");
     }
 
     render(
       <CardContextProvider rootElement={this} hass={hass} config={this.config}>
-        <MediocreMediaPlayerCard />
+        <MediocreModernMediaPlayerCard />
       </CardContextProvider>,
       this.content
     );
   }
 
-  setConfig(config: MediocreMediaPlayerCardConfig) {
+  setConfig(config: MediocreModernMediaPlayerCardConfig) {
     if (!config.entity_id) {
       throw new Error("You need to define an entity_id");
     }
@@ -39,6 +39,6 @@ class MediocreMediaPlayerCardWrapper extends HTMLElement {
 }
 
 customElements.define(
-  "mediocre-media-player-card",
-  MediocreMediaPlayerCardWrapper
+  "mediocre-modern-media-player-card",
+  MediocreModernMediaPlayerCardWrapper
 );

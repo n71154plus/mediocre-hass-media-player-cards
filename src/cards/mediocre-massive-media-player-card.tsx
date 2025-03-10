@@ -2,9 +2,8 @@ import { render } from "preact";
 import {
   MediocreMassiveMediaPlayerCard,
   MediocreMassiveMediaPlayerCardConfig,
-  MediocreMassiveMediaPlayerCardContext,
 } from "../components";
-import { StyleSheetManager } from "styled-components";
+import { CardContextProvider } from "../utils";
 
 class MediocreMassiveMediaPlayerCardWrapper extends HTMLElement {
   config: MediocreMassiveMediaPlayerCardConfig = null;
@@ -20,13 +19,9 @@ class MediocreMassiveMediaPlayerCardWrapper extends HTMLElement {
     }
 
     render(
-      <MediocreMassiveMediaPlayerCardContext.Provider
-        value={{ hass, config: this.config }}
-      >
-        <StyleSheetManager target={this}>
-          <MediocreMassiveMediaPlayerCard />
-        </StyleSheetManager>
-      </MediocreMassiveMediaPlayerCardContext.Provider>,
+      <CardContextProvider rootElement={this} hass={hass} config={this.config}>
+        <MediocreMassiveMediaPlayerCard />
+      </CardContextProvider>,
       this.content
     );
   }
@@ -45,16 +40,6 @@ class MediocreMassiveMediaPlayerCardWrapper extends HTMLElement {
   getCardSize() {
     return 1;
   }
-
-  // // The rules for sizing your card in the grid in sections view
-  // getLayoutOptions() {
-  //   return {
-  //     grid_rows: 1,
-  //     grid_columns: 6,
-  //     grid_min_rows: 1,
-  //     grid_max_rows: 1,
-  //   };
-  // }
 }
 
 customElements.define(

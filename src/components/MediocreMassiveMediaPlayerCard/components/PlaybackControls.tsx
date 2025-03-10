@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardContext } from "../MediocreMassiveMediaPlayerCard";
+import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
 import styled from "styled-components";
 import PauseCircleIcon from "mdi-preact/PauseCircleIcon";
 import PlayCircleIcon from "mdi-preact/PlayCircleIcon";
@@ -11,6 +11,7 @@ import RepeatOnceIcon from "mdi-preact/RepeatOnceIcon";
 import RepeatIcon from "mdi-preact/RepeatIcon";
 import RepeatOffIcon from "mdi-preact/RepeatOffIcon";
 import { IconButton } from "../../IconButton";
+import { CardContext, CardContextType } from "../../../utils";
 
 const PlaybackControlsWrap = styled.div`
   display: flex;
@@ -20,7 +21,10 @@ const PlaybackControlsWrap = styled.div`
 `;
 
 export const PlaybackControls = () => {
-  const { hass, config } = useContext(MediocreMassiveMediaPlayerCardContext);
+  const { hass, config } =
+    useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
+      CardContext
+    );
   const playing = hass.states[config.entity_id].state === "playing";
   const shuffle = hass.states[config.entity_id].attributes?.shuffle ?? false;
   const repeat: "one" | "all" | "off" =

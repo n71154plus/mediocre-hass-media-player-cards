@@ -1,6 +1,7 @@
 import { useContext } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardContext } from "../MediocreMassiveMediaPlayerCard";
+import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
 import styled from "styled-components";
+import { CardContext, CardContextType } from "../../../utils";
 
 const ImgWrap = styled.div`
   aspect-ratio: 1;
@@ -19,7 +20,10 @@ const Img = styled.img`
 `;
 
 export const AlbumArt = () => {
-  const { hass, config } = useContext(MediocreMassiveMediaPlayerCardContext);
+  const { hass, config } =
+    useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
+      CardContext
+    );
   const artwork = hass.states[config.entity_id].attributes.entity_picture;
 
   if (!artwork) {

@@ -1,6 +1,7 @@
 import { useContext } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardContext } from "../MediocreMassiveMediaPlayerCard";
+import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
 import styled from "styled-components";
+import { CardContext, CardContextType } from "../../../utils";
 
 const TitleWrap = styled.div`
   display: flex;
@@ -19,7 +20,10 @@ const TitleH3 = styled.h3`
 `;
 
 export const Title = () => {
-  const { hass, config } = useContext(MediocreMassiveMediaPlayerCardContext);
+  const { hass, config } =
+    useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
+      CardContext
+    );
   const title = hass.states[config.entity_id].attributes?.media_title;
   const artist = hass.states[config.entity_id].attributes?.media_artist;
   const albumName = hass.states[config.entity_id].attributes?.media_album_name;

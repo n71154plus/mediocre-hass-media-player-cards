@@ -1,175 +1,95 @@
-import { fireEvent } from "custom-card-helpers"
-import { MediocreMediaPlayerCardUi } from "./MediocreMediaPlayerCardUi"
-import { CardContext, CardContextType } from "../../utils"
-import { useContext } from "preact/hooks"
+"use client";
 
-export type MediocreMediaPlayerCardConfig = {
-    entity_id: string
-}
+import { CardContext, type CardContextType } from "../../utils";
+import { useContext, useState } from "preact/hooks";
+import type { MediocreMediaPlayerCardConfig } from "./config";
+import styled from "styled-components";
+import {
+  AlbumArt,
+  MetaInfo,
+  PlaybackControls,
+  PlayerInfo,
+  SpeakerGrouping,
+} from "./components";
+import {} from "./components/SpeakerGrouping";
+import SpeakersIcon from "mdi-preact/SpeakersIcon";
+import { IconButton } from "../IconButton";
+
+const CardContent = styled.div<{ isOn: boolean }>`
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  opacity: ${(props) => (props.isOn ? 1 : 0.7)};
+  transition: opacity 0.3s ease;
+  position: relative;
+  //   overflow: hidden;
+  //   border-radius: 12px;
+`;
+
+const ContentContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+const GroupButton = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+`;
 
 export const MediocreMediaPlayerCard = () => {
-    const { hass, config, rootElement } = useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext)
-    const { entity_id } = config
+  const { hass, config } =
+    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
+  const { entity_id } = config;
+  const [showGrouping, setShowGrouping] = useState(false);
 
-    // Get the media player entity from hass
-    const entity = hass.states[entity_id]
+  // Get the media player entity from hass
+  const entity = hass.states[entity_id];
 
-    if (!entity) {
-        return <div>Entity {entity_id} not found</div>
-    }
+  if (!entity) {
+    return <div>Entity {entity_id} not found</div>;
+  }
 
-    // Extract state and attributes
-    const { state, attributes } = entity
+  // Extract state and attributes
+  const { state } = entity;
 
-    const {
-        media_title,
-        media_artist,
-        media_album_art,
-        entity_picture,
-        volume_level = 0,
-        is_volume_muted = false,
-        shuffle = false,
-        repeat = "off",
-        friendly_name,
-    } = attributes
+  // Determine if the player is on
+  const isOn = !["off", "unavailable"].includes(state);
 
-    // Determine if the player is on
-    const isOn = !["off", "unavailable"].includes(state)
+  // Check if grouping is available
+  const hasGroupingFeature =
+    config.speaker_group &&
+    config.speaker_group.entities &&
+    config.speaker_group.entities.length > 0;
 
-    // Determine if the player is playing
-    const isPlaying = state === "playing"
+  const toggleGrouping = () => {
+    setShowGrouping(!showGrouping);
+  };
 
-    // Get album art (try media_album_art first, then entity_picture, then default)
-    const albumArt = media_album_art || entity_picture || null
-
-    // Get title and artist (with fallbacks)
-    const title = media_title || attributes.friendly_name || entity_id
-    const artist = media_artist || ""
-
-    // Get volume (convert from 0-100 to 0-1 if needed)
-    const volume = is_volume_muted ? 0 : volume_level || 0
-
-    // Map repeat to our expected values
-    const repeatMode = (() => {
-        if (repeat === "one" || repeat === "one_shot") return "one"
-        if (repeat === "all") return "all"
-        return "off"
-    })()
-
-    // Handle play/pause
-    const handlePlayPause = () => {
-        if (!isOn) return
-
-        const service = isPlaying ? "media_pause" : "media_play"
-        hass.callService("media_player", service, {
-            entity_id,
-        })
-    }
-
-    // Handle next track
-    const handleNext = () => {
-        if (!isOn) return
-
-        hass.callService("media_player", "media_next_track", {
-            entity_id,
-        })
-    }
-
-    // Handle previous track
-    const handlePrevious = () => {
-        if (!isOn) return
-
-        hass.callService("media_player", "media_previous_track", {
-            entity_id,
-        })
-    }
-
-    // Handle volume change
-    const handleVolumeChange = (newVolume: number) => {
-        if (!isOn) return
-
-        // If volume was muted and is now > 0, unmute
-        if (is_volume_muted && newVolume > 0) {
-            hass.callService("media_player", "volume_mute", {
-                entity_id,
-                is_volume_muted: false,
-            })
-        }
-
-        // Set the volume level
-        hass.callService("media_player", "volume_set", {
-            entity_id,
-            volume_level: newVolume,
-        })
-    }
-
-    // Handle more info
-    const handleMoreInfo = () => {
-        // Use fireEvent from custom-card-helpers to show more info dialog
-        console.log('fireEvent', rootElement, "hass-more-info",);
-        fireEvent(rootElement, "hass-more-info", {
-            entityId: entity_id,
-        }
-        );
-    }
-
-    // Handle shuffle toggle
-    const handleToggleShuffle = () => {
-        if (!isOn) return
-
-        hass.callService("media_player", "shuffle_set", {
-            entity_id,
-            shuffle: !shuffle,
-        })
-    }
-
-    // Handle repeat change
-    const handleChangeRepeat = () => {
-        if (!isOn) return
-
-        let newRepeat: string
-
-        // Cycle through repeat modes: off -> all -> one -> off
-        if (repeatMode === "off") newRepeat = "all"
-        else if (repeatMode === "all") newRepeat = "one"
-        else newRepeat = "off"
-
-        hass.callService("media_player", "repeat_set", {
-            entity_id,
-            repeat: newRepeat,
-        })
-    }
-
-    // Handle mute toggle
-    const handleMuteToggle = () => {
-        if (!isOn) return
-
-        hass.callService("media_player", "volume_mute", {
-            entity_id,
-            is_volume_muted: !is_volume_muted,
-        })
-    }
-
-    return (
-        <MediocreMediaPlayerCardUi
-            isPlaying={isPlaying}
-            albumArt={albumArt}
-            title={title}
-            artist={artist}
-            volume={volume}
-            onPlayPause={handlePlayPause}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            onVolumeChanged={handleVolumeChange}
-            onToggleMute={handleMuteToggle}
-            isOn={isOn}
-            onMoreInfo={handleMoreInfo}
-            shuffle={shuffle}
-            onToggleShuffle={handleToggleShuffle}
-            repeat={repeatMode}
-            onChangeRepeat={handleChangeRepeat}
-            friendlyName={friendly_name}
-        />
-    )
-}
-
+  return (
+    // @ts-ignore - ha-card is a custom element from Home Assistant
+    <ha-card>
+      <CardContent isOn={isOn}>
+        <AlbumArt />
+        <ContentContainer>
+          <MetaInfo />
+          <PlayerInfo />
+          <PlaybackControls />
+        </ContentContainer>
+        {hasGroupingFeature && (
+          <GroupButton>
+            <IconButton
+              size="x-small"
+              onClick={toggleGrouping}
+              Icon={SpeakersIcon}
+            />
+          </GroupButton>
+        )}
+      </CardContent>
+      {showGrouping && hasGroupingFeature && <SpeakerGrouping />}
+      {/* @ts-ignore - ha-card is a custom element from Home Assistant */}
+    </ha-card>
+  );
+};
