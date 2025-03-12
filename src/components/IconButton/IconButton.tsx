@@ -69,7 +69,6 @@ export const IconButton = ({
     >
       {typeof Icon === "string" ? (
         <Fragment>
-          {/* @ts-ignore - ha-icon is a custom element from Home Assistant */}
           <ha-icon icon={Icon} />
         </Fragment>
       ) : (

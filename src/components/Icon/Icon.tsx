@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MdiReactIconComponentType } from "mdi-preact";
-import { Fragment } from "preact/jsx-runtime";
+import { Fragment } from "preact";
 
 export type IconSize =
   | "xx-small"
@@ -41,7 +41,6 @@ export const Icon = ({ Icon, size = "medium", className }: IconProps) => {
     <IconWrap $size={size} className={className}>
       {typeof Icon === "string" ? (
         <Fragment>
-          {/* @ts-ignore - ha-icon is a custom element from Home Assistant */}
           <ha-icon icon={Icon} />
         </Fragment>
       ) : (

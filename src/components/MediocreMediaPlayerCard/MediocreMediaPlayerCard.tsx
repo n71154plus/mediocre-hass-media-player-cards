@@ -77,12 +77,10 @@ export const MediocreMediaPlayerCard = () => {
 
   if (!entity) {
     return (
-      // @ts-ignore - ha-card is a custom element from Home Assistant
       <ha-card>
         <Card>
           <div>Entity {entity_id} not found</div>
         </Card>
-        {/* @ts-ignore - ha-card is a custom element from Home Assistant */}
       </ha-card>
     );
   }
@@ -124,7 +122,6 @@ export const MediocreMediaPlayerCard = () => {
   }, [entity_id]);
 
   return (
-    // @ts-ignore - ha-card is a custom element from Home Assistant
     <ha-card>
       <Card>
         <CardContent isOn={isOn}>
@@ -186,7 +183,6 @@ export const MediocreMediaPlayerCard = () => {
         {showGrouping && hasGroupingFeature && <SpeakerGrouping />}
         {showCustomButtons && <CustomButtons />}
       </Card>
-      {/* @ts-ignore - ha-card is a custom element from Home Assistant */}
     </ha-card>
   );
 };
