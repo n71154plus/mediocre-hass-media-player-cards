@@ -1,14 +1,19 @@
-import { useState, useEffect, useContext, useCallback } from "preact/hooks";
+import { useState, useEffect, useContext } from "preact/hooks";
 import styled from "styled-components";
 import { Vibrant } from "node-vibrant/browser";
 import { CardContext, CardContextType } from "../../../utils";
 import { MediocreMediaPlayerCardConfig } from "../config";
-import { fireEvent } from "custom-card-helpers";
 import { Icon } from "../../Icon";
+import { ButtonHTMLAttributes, Fragment } from "preact/compat";
 
-const AlbumArtContainer = styled.div<{ shadowColor?: string }>`
-  width: 100px;
-  height: 100px;
+const AlbumArtContainer = styled.button<{ shadowColor?: string }>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+  margin: 0px;
+  max-height: 100px;
+  aspect-ratio: 1;
   flex-shrink: 0;
   border-radius: 4px;
   overflow: hidden;
@@ -36,16 +41,29 @@ const NoAlbumArt = styled.div`
   opacity: 0.5;
 `;
 
+const SourceIndicator = styled.div`
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  color: var(--primary-text-color);
+  opacity: 0.8;
+`;
+
 // Component
-export const AlbumArt = () => {
-  const { hass, config, rootElement } =
+export const AlbumArt = ({
+  ...buttonProps
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+  const { hass, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
   const { entity_id } = config;
+  const player = hass.states[entity_id];
   const {
     media_title: title,
     media_artist: artist,
     entity_picture: albumArt,
-  } = hass.states[entity_id].attributes;
+    source,
+  } = player.attributes;
+  const state = player.state;
   // State for average color
   const [averageColor, setAverageColor] = useState<string | null>(null);
 
@@ -74,25 +92,54 @@ export const AlbumArt = () => {
     }
   };
 
-  const handleMoreInfo = useCallback(() => {
-    fireEvent(rootElement, "hass-more-info", {
-      entityId: entity_id,
-    });
-  }, []);
-
   return (
-    <AlbumArtContainer onClick={handleMoreInfo} shadowColor={averageColor}>
+    <AlbumArtContainer {...buttonProps} shadowColor={averageColor}>
       {!!albumArt ? (
-        <AlbumArtImage
-          src={albumArt}
-          alt={`${title} by ${artist}`}
-          onLoad={handleImageLoad}
-        />
+        <Fragment>
+          <AlbumArtImage
+            src={albumArt}
+            alt={`${title} by ${artist}`}
+            onLoad={handleImageLoad}
+          />
+          <SourceIndicator>
+            <Icon size="xx-small" Icon={getIcon({ source, state })} />
+          </SourceIndicator>
+        </Fragment>
       ) : (
         <NoAlbumArt>
-          <Icon size="x-large" Icon="mdi:disc" />
+          <Icon size="x-large" Icon={getIcon({ source, state })} />
         </NoAlbumArt>
       )}
     </AlbumArtContainer>
   );
+};
+
+const getIcon = ({ source, state }: { source: string; state: string }) => {
+  if (state === "off") return "mdi:power-off";
+  switch (source?.toLowerCase()) {
+    case "spotify":
+      return "mdi:spotify";
+    case "airplay":
+      return "mdi:airplay";
+    case "bluetooth":
+      return "mdi:bluetooth";
+    case "net radio":
+      return "mdi:radio";
+    case "server":
+      return "mdi:server";
+    case "usb":
+      return "mdi:usb";
+    case "aux":
+      return "mdi:audio-input-rca";
+    case "hdmi":
+      return "mdi:hdmi-port";
+    case "tv":
+      return "mdi:television";
+    case "tuner":
+      return "mdi:radio-tower";
+    case "optical":
+      return "mdi:audio-input-stereo-minijack";
+    default:
+      return "mdi:music";
+  }
 };

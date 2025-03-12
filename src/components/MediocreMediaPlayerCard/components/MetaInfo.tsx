@@ -12,7 +12,6 @@ const TitleText = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--primary-text-color, #333);
-  margin-right: 32px;
 `;
 
 const ArtistText = styled.p`
@@ -22,7 +21,6 @@ const ArtistText = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 32px;
 `;
 
 export const MetaInfo = () => {
@@ -33,13 +31,16 @@ export const MetaInfo = () => {
     media_title: title,
     media_artist: artist,
     media_album_name: albumName,
+    source,
+    friendly_name: friendlyName,
   } = hass.states[entity_id].attributes;
 
+  const titleText = title ?? source ?? friendlyName;
   const artistText = `${albumName !== title ? `${albumName} - ` : ""}${artist}`;
 
   return (
     <Fragment>
-      {!!title && <TitleText>{title}</TitleText>}
+      {!!titleText && <TitleText>{titleText}</TitleText>}
       {(!!albumName || !!artist) && <ArtistText>{artistText}</ArtistText>}
     </Fragment>
   );

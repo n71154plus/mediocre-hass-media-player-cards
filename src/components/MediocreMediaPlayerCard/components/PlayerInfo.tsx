@@ -30,7 +30,7 @@ export const PlayerInfo = () => {
   const groupMembers =
     hass.states[speaker_group?.entity_id ?? entity_id]?.attributes
       ?.group_members;
-  const mdiIcon = getIcon({ icon, deviceClass });
+  const mdiIcon = getDeviceIcon({ icon, deviceClass });
 
   const handleMoreInfo = useCallback(() => {
     fireEvent(rootElement, "hass-more-info", {
@@ -49,7 +49,7 @@ export const PlayerInfo = () => {
   );
 };
 
-const getIcon = ({
+export const getDeviceIcon = ({
   icon,
   deviceClass,
 }: {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MdiReactIconComponentType } from "mdi-preact";
 import { Fragment } from "preact/jsx-runtime";
+import { ButtonHTMLAttributes } from "preact/compat";
 
 export type ButtonSize =
   | "xx-small"
@@ -10,12 +11,10 @@ export type ButtonSize =
   | "large"
   | "x-large";
 
-export type IconButtonProps = {
+export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   Icon: MdiReactIconComponentType | string;
-  onClick: () => void;
   size?: ButtonSize;
   disabled?: boolean;
-  className?: string;
 };
 
 const Button = styled.button<{
@@ -54,19 +53,19 @@ const Button = styled.button<{
 
 export const IconButton = ({
   Icon,
-  onClick,
   size = "medium",
   disabled = false,
   className,
+  ...buttonProps
 }: IconButtonProps) => {
   const width = getButtonSize(size);
   return (
     <Button
-      onClick={onClick}
       disabled={disabled}
       $disabled={disabled}
       $size={size}
       className={className}
+      {...buttonProps}
     >
       {typeof Icon === "string" ? (
         <Fragment>

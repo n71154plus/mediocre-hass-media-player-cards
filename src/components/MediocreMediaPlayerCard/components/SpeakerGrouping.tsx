@@ -187,7 +187,7 @@ export const SpeakerGrouping = () => {
                   </SpeakerName>
                   {speaker.isGrouped && (
                     <VolumeControl>
-                      <Icon size="x-small" Icon="mdi:volume-high" />
+                      <Icon size="x-small" Icon={"mdi:volume-high"} />
                       <Slider
                         min={0}
                         max={1}
@@ -218,8 +218,8 @@ export const SpeakerGrouping = () => {
               }
             >
               {speaker.name}
-              {speaker.isGrouped && <Icon size="x-small" Icon="mdi:close" />}
-              {!speaker.isGrouped && <Icon size="x-small" Icon="mdi:plus" />}
+              {speaker.isGrouped && <Icon size="x-small" Icon={"mdi:close"} />}
+              {!speaker.isGrouped && <Icon size="x-small" Icon={"mdi:plus"} />}
             </Chip>
           ))}
       </Chips>
