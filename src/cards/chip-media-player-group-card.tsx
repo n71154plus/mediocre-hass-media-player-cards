@@ -1,10 +1,9 @@
 import { render } from "preact";
-import { StyleSheetManager } from "styled-components";
 import {
   MediocreChipMediaPlayerGroupCard,
   MediocreChipMediaPlayerGroupCardConfig,
-  MediocreChipMediaPlayerGroupCardContext,
 } from "../components";
+import { CardContextProvider } from "../utils";
 
 class MediocreChipMediaPlayerGroupCardWrapper extends HTMLElement {
   config: MediocreChipMediaPlayerGroupCardConfig = null;
@@ -20,13 +19,9 @@ class MediocreChipMediaPlayerGroupCardWrapper extends HTMLElement {
     }
 
     render(
-      <MediocreChipMediaPlayerGroupCardContext.Provider
-        value={{ hass, config: this.config }}
-      >
-        <StyleSheetManager target={this}>
-          <MediocreChipMediaPlayerGroupCard />
-        </StyleSheetManager>
-      </MediocreChipMediaPlayerGroupCardContext.Provider>,
+      <CardContextProvider rootElement={this} hass={hass} config={this.config}>
+        <MediocreChipMediaPlayerGroupCard />
+      </CardContextProvider>,
       this.content
     );
   }

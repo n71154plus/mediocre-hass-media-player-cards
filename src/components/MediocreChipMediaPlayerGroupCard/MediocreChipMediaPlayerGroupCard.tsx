@@ -1,21 +1,13 @@
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
-import { createContext, Fragment } from "preact";
-import { HomeAssistant } from "custom-card-helpers";
+import { Fragment } from "preact";
 import styled from "styled-components";
 import { Icon } from "../Icon";
+import { CardContext, CardContextType } from "../../utils";
 
 export type MediocreChipMediaPlayerGroupCardConfig = {
   entity_id: string;
   entities: string[];
 };
-
-export const MediocreChipMediaPlayerGroupCardContext = createContext<{
-  hass: HomeAssistant;
-  config: MediocreChipMediaPlayerGroupCardConfig;
-}>({
-  hass: null,
-  config: null,
-});
 
 export type Player = {
   entity_id: string;
@@ -62,7 +54,10 @@ const Chip = styled.div<{ $inactive: boolean; $loading: boolean }>`
 `;
 
 export const MediocreChipMediaPlayerGroupCard = () => {
-  const { hass, config } = useContext(MediocreChipMediaPlayerGroupCardContext);
+  const { hass, config } =
+    useContext<CardContextType<MediocreChipMediaPlayerGroupCardConfig>>(
+      CardContext
+    );
 
   const [playersLoading, setPlayersLoading] = useState<string[]>([]);
 
