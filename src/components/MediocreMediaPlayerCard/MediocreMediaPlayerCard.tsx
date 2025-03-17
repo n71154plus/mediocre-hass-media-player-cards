@@ -1,4 +1,4 @@
-import { CardContext, useActionProps, type CardContextType } from "../../utils";
+import { CardContext, type CardContextType } from "../../utils";
 import { useCallback, useContext, useState } from "preact/hooks";
 import type { MediocreMediaPlayerCardConfig } from "./config";
 import styled from "styled-components";
@@ -12,11 +12,11 @@ import {
   SpeakerGrouping,
 } from "./components";
 import { IconButton } from "../IconButton";
-import { fireEvent } from "custom-card-helpers";
 import { VolumeSlider, VolumeTrigger } from "./components/VolumeSlider";
 import { Fragment } from "preact/jsx-runtime";
 import { useSupportedFeatures } from "./hooks/useSupportedFeatures";
 import { InteractionConfig } from "../../types";
+import { useActionProps } from "../../hooks";
 
 const Card = styled.div`
   border-radius: var(--ha-card-border-radius, 12px);

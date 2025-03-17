@@ -2,13 +2,14 @@ import { useCallback, useContext, useState } from "preact/hooks";
 import { MediocreMassiveMediaPlayerCardConfig } from "../";
 import styled, { keyframes } from "styled-components";
 import { IconButton } from "../../IconButton";
-import { CardContext, CardContextType, useActionProps } from "../../../utils";
+import { CardContext, CardContextType } from "../../../utils";
 import { ReactNode } from "preact/compat";
 import { VolumeController, VolumeTrigger } from "./VolumeController";
 import { SpeakerGrouping } from "./SpeakerGrouping";
 import { InteractionConfig } from "../../../types";
 import { Chip } from "../../Chip";
 import { Icon } from "../../Icon";
+import { useActionProps } from "../../../hooks";
 
 const PlaybackControlsWrap = styled.div`
   background-color: var(--card-background-color);

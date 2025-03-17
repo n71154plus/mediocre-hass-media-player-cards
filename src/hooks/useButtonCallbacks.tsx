@@ -1,20 +1,18 @@
 // Ai generated crap below because i couldnt be bothered
-import { handleAction, HomeAssistant } from "custom-card-helpers";
-import { InteractionConfig, InteractionType } from "../types/actionTypes";
 import { useCallback, useMemo, useRef } from "preact/hooks";
 
-export function useActionProps({
-  actionConfig,
-  rootElement,
-  hass,
+export function useButtonCallbacks({
+  onTap,
+  onLongPress,
+  onDoubleTap,
 }: {
-  actionConfig: InteractionConfig;
-  rootElement: HTMLElement;
-  hass: HomeAssistant;
+  onTap: () => void;
+  onLongPress: () => void;
+  onDoubleTap: () => void;
 }) {
   const longPressTimeout = useRef<number | null>(null);
   const resetTimeout = useRef<number | null>(null);
-  const actionType = useRef<InteractionType | null>(null);
+  const actionType = useRef<"tap" | "hold" | "double_tap" | null>(null);
   const isDoubleClick = useRef<boolean>(false);
 
   const resetAction = useCallback(() => {
@@ -28,10 +26,20 @@ export function useActionProps({
 
   const performAction = useCallback(() => {
     if (actionType.current === null) return;
-    handleAction(rootElement, hass, actionConfig, actionType.current);
+    switch (actionType.current) {
+      case "tap":
+        onTap();
+        break;
+      case "hold":
+        onLongPress();
+        break;
+      case "double_tap":
+        onDoubleTap();
+        break;
+    }
     // Cleanup after action
     resetAction();
-  }, [actionConfig, rootElement, hass, resetAction]);
+  }, [actionType, resetAction]);
 
   const onMouseDown = useCallback(() => {
     actionType.current = "tap";
