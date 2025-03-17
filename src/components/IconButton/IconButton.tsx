@@ -30,7 +30,7 @@ const Button = styled.button<{
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
-  padding: ${(props) => (props.$size === "xx-small" ? 0 : 2)}%;
+  padding: ${(props) => (props.$size === "xx-small" ? 0 : 4)}px;
   min-width: ${(props) => getButtonSize(props.$size)}px;
   aspect-ratio: 1;
   color: ${(props) =>
