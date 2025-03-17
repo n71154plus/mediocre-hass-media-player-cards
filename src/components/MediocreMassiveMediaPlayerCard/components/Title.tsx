@@ -1,13 +1,20 @@
 import { useContext } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
+import { MediocreMassiveMediaPlayerCardConfig } from "../";
 import styled from "styled-components";
 import { CardContext, CardContextType } from "../../../utils";
 
 const TitleWrap = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
+  text-align: center;
+  > h2,
+  > h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 const TitleH2 = styled.h2`

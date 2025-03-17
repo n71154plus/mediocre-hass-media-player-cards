@@ -1,4 +1,4 @@
-import { CardContext, type CardContextType } from "../../utils";
+import { CardContext, useActionProps, type CardContextType } from "../../utils";
 import { useCallback, useContext, useState } from "preact/hooks";
 import type { MediocreMediaPlayerCardConfig } from "./config";
 import styled from "styled-components";
@@ -16,6 +16,7 @@ import { fireEvent } from "custom-card-helpers";
 import { VolumeSlider, VolumeTrigger } from "./components/VolumeSlider";
 import { Fragment } from "preact/jsx-runtime";
 import { useSupportedFeatures } from "./hooks/useSupportedFeatures";
+import { InteractionConfig } from "../../types";
 
 const Card = styled.div`
   border-radius: var(--ha-card-border-radius, 12px);
@@ -64,7 +65,7 @@ const ContentRow = styled.div`
 export const MediocreMediaPlayerCard = () => {
   const { rootElement, hass, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
-  const { entity_id, custom_buttons } = config;
+  const { entity_id, custom_buttons, action } = config;
 
   const hasCustomButtons = custom_buttons && custom_buttons.length > 0;
 
@@ -109,11 +110,17 @@ export const MediocreMediaPlayerCard = () => {
     setShowGrouping(!showGrouping);
   };
 
-  const toggleMore = useCallback(() => {
-    fireEvent(rootElement, "hass-more-info", {
-      entityId: entity_id,
-    });
-  }, [showCustomButtons]);
+  const artAction: InteractionConfig = action ?? {
+    tap_action: { action: "more-info" },
+  };
+  const artActionProps = useActionProps({
+    hass,
+    rootElement,
+    actionConfig: {
+      ...artAction,
+      entity: config.entity_id,
+    },
+  });
 
   const togglePower = useCallback(() => {
     hass.callService("media_player", "toggle", {
@@ -125,7 +132,7 @@ export const MediocreMediaPlayerCard = () => {
     <ha-card>
       <Card>
         <CardContent isOn={isOn}>
-          <AlbumArt onClick={toggleMore} />
+          <AlbumArt maxHeight="100px" {...artActionProps} />
           <ContentContainer>
             <ContentLeft>
               <MetaInfo />

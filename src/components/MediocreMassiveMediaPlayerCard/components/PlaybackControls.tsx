@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardConfig } from "../MediocreMassiveMediaPlayerCard";
+import { MediocreMassiveMediaPlayerCardConfig } from "../";
 import styled from "styled-components";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
@@ -8,7 +8,8 @@ const PlaybackControlsWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  width: 100%;
 `;
 
 export const PlaybackControls = () => {
@@ -63,16 +64,16 @@ export const PlaybackControls = () => {
         Icon={shuffle ? "mdi:shuffle-variant" : "mdi:shuffle-disabled"}
       />
       <IconButton
-        size="medium"
+        size="large"
         onClick={previousTrack}
         Icon={"mdi:skip-previous"}
       />
       <IconButton
-        size="large"
+        size="x-large"
         onClick={togglePlayback}
         Icon={playing ? "mdi:pause-circle" : "mdi:play-circle"}
       />
-      <IconButton size="medium" onClick={nextTrack} Icon={"mdi:skip-next"} />
+      <IconButton size="large" onClick={nextTrack} Icon={"mdi:skip-next"} />
       <IconButton
         size="small"
         onClick={toggleRepeat}

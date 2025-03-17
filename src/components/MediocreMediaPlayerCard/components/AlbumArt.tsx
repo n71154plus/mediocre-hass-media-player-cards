@@ -6,13 +6,16 @@ import { MediocreMediaPlayerCardConfig } from "../config";
 import { Icon } from "../../Icon";
 import { ButtonHTMLAttributes, Fragment } from "preact/compat";
 
-const AlbumArtContainer = styled.button<{ shadowColor?: string }>`
+const AlbumArtContainer = styled.button<{
+  shadowColor?: string;
+  maxHeight: string;
+}>`
   background: none;
   border: none;
   cursor: pointer;
   padding: 0px;
   margin: 0px;
-  max-height: 100px;
+  max-height: ${(props) => props.maxHeight};
   aspect-ratio: 1;
   flex-shrink: 0;
   border-radius: 4px;
@@ -49,10 +52,12 @@ const SourceIndicator = styled.div`
   opacity: 0.8;
 `;
 
+export type AlbumArtProps = {
+  maxHeight: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
 // Component
-export const AlbumArt = ({
-  ...buttonProps
-}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const AlbumArt = ({ maxHeight, ...buttonProps }: AlbumArtProps) => {
   const { hass, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
   const { entity_id } = config;
@@ -93,7 +98,11 @@ export const AlbumArt = ({
   };
 
   return (
-    <AlbumArtContainer {...buttonProps} shadowColor={averageColor}>
+    <AlbumArtContainer
+      maxHeight={maxHeight}
+      {...buttonProps}
+      shadowColor={averageColor}
+    >
       {!!albumArt ? (
         <Fragment>
           <AlbumArtImage

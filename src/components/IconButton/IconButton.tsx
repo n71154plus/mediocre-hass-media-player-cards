@@ -9,7 +9,8 @@ export type ButtonSize =
   | "small"
   | "medium"
   | "large"
-  | "x-large";
+  | "x-large"
+  | "xx-large";
 
 export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   Icon: MdiReactIconComponentType | string;
@@ -92,5 +93,7 @@ const getButtonSize = (size: ButtonSize) => {
       return 48;
     case "x-large":
       return 80;
+    case "xx-large":
+      return 120;
   }
 };

@@ -10,19 +10,11 @@ class MediocreMassiveMediaPlayerCardWrapper extends HTMLElement {
   content: HTMLElement = null;
 
   set hass(hass) {
-    // Initialize the content if it's not there yet.
-    if (!this.content) {
-      this.innerHTML = `
-          <div class="card-content"></div>
-      `;
-      this.content = this.querySelector("div");
-    }
-
     render(
       <CardContextProvider rootElement={this} hass={hass} config={this.config}>
         <MediocreMassiveMediaPlayerCard />
       </CardContextProvider>,
-      this.content
+      this
     );
   }
 

@@ -1,12 +1,8 @@
 import { useContext, useMemo } from "preact/hooks";
-import { MediocreMassiveMediaPlayerCardConfig } from "../";
 import styled from "styled-components";
 import { ProgressBar } from "../../ProgressBar";
 import { CardContext, CardContextType } from "../../../utils";
-
-const TrackWrap = styled.div`
-  width: 100%;
-`;
+import { MediocreMediaPlayerCardConfig } from "../config";
 
 const TimeWrap = styled.div`
   display: flex;
@@ -17,9 +13,7 @@ const TimeWrap = styled.div`
 
 export const Track = () => {
   const { hass, config } =
-    useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
-      CardContext
-    );
+    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
   const mediaPosition = useMemo(() => {
     const player = hass.states[config.entity_id];
     const mediaPosition = player.attributes?.media_position ?? null;
@@ -64,12 +58,12 @@ export const Track = () => {
     mediaPosition;
 
   return (
-    <TrackWrap>
+    <div>
       <ProgressBar value={currentPosition} min={0} max={mediaDuration} />
       <TimeWrap>
         <span>{prettyNow}</span>
         <span>{prettyEnd}</span>
       </TimeWrap>
-    </TrackWrap>
+    </div>
   );
 };

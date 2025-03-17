@@ -9,6 +9,7 @@ declare module "preact" {
     interface IntrinsicElements {
       "ha-icon": HaIconAttributes;
       "ha-card": preact.JSX.HTMLAttributes;
+      "ha-slider": preact.JSX.InputHTMLAttributes<HTMLInputElement>;
     }
   }
 }
