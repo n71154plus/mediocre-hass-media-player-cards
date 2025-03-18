@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { MdiReactIconComponentType } from "mdi-preact";
 import { Fragment } from "preact/jsx-runtime";
 import { ButtonHTMLAttributes } from "preact/compat";
@@ -14,13 +14,28 @@ export type ButtonSize =
 
 export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   Icon: MdiReactIconComponentType | string;
+  hasLongPress?: boolean;
   size?: ButtonSize;
   disabled?: boolean;
 };
 
+const longPressIndicator = keyframes`
+  0% {
+    background-color: var(--divider-color, rgba(0, 0, 0, 0.1));
+  }
+  90% {
+    background-color: var(--divider-color, rgba(0, 0, 0, 0.1));
+  }
+
+  100% {
+    background-color: var(--primary-color, rgba(7, 114, 244));
+  }
+`;
+
 const Button = styled.button<{
   $disabled: boolean;
   $size: ButtonSize;
+  $hasLongPress: boolean;
 }>`
   background: none;
   border: none;
@@ -44,6 +59,10 @@ const Button = styled.button<{
 
   &:active {
     background-color: var(--divider-color, rgba(0, 0, 0, 0.1));
+    animation-name: ${longPressIndicator};
+    animation-duration: 2.3s;
+    animation-fill-mode: forwards;
+    ${(props) => (!props.$hasLongPress ? "animation: none;" : "")}
   }
   > ha-icon {
     --mdc-icon-size: ${(props) => getButtonSize(props.$size)}px;
@@ -56,6 +75,7 @@ export const IconButton = ({
   Icon,
   size = "medium",
   disabled = false,
+  hasLongPress = false,
   className,
   ...buttonProps
 }: IconButtonProps) => {
@@ -65,6 +85,7 @@ export const IconButton = ({
       disabled={disabled}
       $disabled={disabled}
       $size={size}
+      $hasLongPress={hasLongPress}
       className={className}
       {...buttonProps}
     >

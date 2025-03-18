@@ -113,6 +113,7 @@ export const MediocreMediaPlayerCard = () => {
   const artAction: InteractionConfig = action ?? {
     tap_action: { action: "more-info" },
   };
+
   const artActionProps = useActionProps({
     hass,
     rootElement,

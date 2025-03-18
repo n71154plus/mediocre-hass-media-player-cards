@@ -7,7 +7,7 @@ export function useButtonCallbacks({
   onDoubleTap,
 }: {
   onTap: () => void;
-  onLongPress: () => void;
+  onLongPress?: () => void;
   onDoubleTap: () => void;
 }) {
   const longPressTimeout = useRef<number | null>(null);
@@ -31,7 +31,7 @@ export function useButtonCallbacks({
         onTap();
         break;
       case "hold":
-        onLongPress();
+        onLongPress?.();
         break;
       case "double_tap":
         onDoubleTap();
@@ -45,7 +45,7 @@ export function useButtonCallbacks({
     actionType.current = "tap";
     longPressTimeout.current = window.setTimeout(() => {
       actionType.current = "hold";
-    }, 500); // 500ms for long press
+    }, 300); // 300ms for long press
 
     resetTimeout.current = window.setTimeout(resetAction, 2000); // 2000ms for reset if onMouseUp is not triggered
   }, [resetAction]);
@@ -83,6 +83,7 @@ export function useButtonCallbacks({
       onMouseDown,
       onMouseUp,
       onDblClick,
+      hasLongPress: !!onLongPress,
     }),
     [onMouseDown, onMouseUp, onDblClick]
   );
