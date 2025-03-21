@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [preact()],
   build: {
     lib: {
-      name: "MyLittleJankyHassCards",
+      name: "MediocreMediaPlayerCard",
       entry: ["src/cards/index.ts"],
     },
   },
