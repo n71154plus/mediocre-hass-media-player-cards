@@ -15,6 +15,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Calculate version
+        id: version
+        run: |
+          # Get the latest tag or default to v0.0.0 if no tags exist
+          latest_tag=$(git tag -l "v*" | sort -V | tail -n 1 || echo "v0.0.0")
+
+          # Extract version number without the 'v' prefix
+          latest_version=${latest_tag#v}
+
+          # Split the version into major, minor, patch components
+          IFS='.' read -r major minor patch <<< "$latest_version"
+
+          # Increment the minor version and reset patch to 0
+          if [[ "$minor" == "" ]]; then
+            minor=0
+          fi
+
+          # If no previous version, set to 0.1.0, otherwise increment minor by 0.1
+          if [[ "$latest_version" == "0.0.0" ]]; then
+            new_version="0.1.0"
+          else
+            new_minor=$(echo "$minor + 1" | bc)
+            new_version="$major.$new_minor.0"
+          fi
+
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,9 +59,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/*
-          name: Release ${{ github.ref_name }}
-          tag_name: v${{ github.run_number }}
+          name: Release v${{ steps.version.outputs.new_version }}
+          tag_name: v${{ steps.version.outputs.new_version }}
           draft: false
-          prerelease: false
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
