@@ -1,36 +1,19 @@
-import { render } from "preact";
-import {
-  MediocreMassiveMediaPlayerCard,
-  MediocreMassiveMediaPlayerCardConfig,
-} from "../components";
-import { CardContextProvider } from "../utils";
+import { MediocreMassiveMediaPlayerCard } from "../components";
+import { MediocreMediaPlayerCardConfig } from "../components/MediaPlayerCommon";
+import { PreactWrapper } from "../utils";
 
-class MediocreMassiveMediaPlayerCardWrapper extends HTMLElement {
-  config: MediocreMassiveMediaPlayerCardConfig = null;
-  content: HTMLElement = null;
+class MediocreMassiveMediaPlayerCardWrapper extends PreactWrapper<MediocreMediaPlayerCardConfig> {
+  Card = MediocreMassiveMediaPlayerCard;
 
-  set hass(hass) {
-    render(
-      <CardContextProvider rootElement={this} hass={hass} config={this.config}>
-        <MediocreMassiveMediaPlayerCard />
-      </CardContextProvider>,
-      this
-    );
-  }
-
-  // The user supplied configuration. Throw an exception and Home Assistant
-  // will render an error card.
-  setConfig(config: MediocreMassiveMediaPlayerCardConfig) {
+  setConfig(config: MediocreMediaPlayerCardConfig) {
     if (!config.entity_id) {
       throw new Error("You need to define an entity_id");
     }
     this.config = config;
   }
 
-  // The height of your card. Home Assistant uses this to automatically
-  // distribute all cards over the available columns in masonry view
-  getCardSize() {
-    return 1;
+  static getConfigElement() {
+    return document.createElement("mediocre-media-player-card-editor");
   }
 }
 
@@ -38,3 +21,13 @@ customElements.define(
   "mediocre-massive-media-player-card",
   MediocreMassiveMediaPlayerCardWrapper
 );
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "mediocre-massive-media-player-card",
+  name: "Mediocre Massive Media Player Card",
+  preview: false, // Optional - defaults to false
+  description: "A media player card with player grouping support", // Optional
+  documentationURL:
+    "https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card", // Adds a help link in the frontend card editor
+});

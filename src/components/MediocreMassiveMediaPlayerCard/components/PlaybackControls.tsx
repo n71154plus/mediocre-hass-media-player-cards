@@ -3,6 +3,7 @@ import { MediocreMassiveMediaPlayerCardConfig } from "../";
 import styled from "styled-components";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
+import { useSupportedFeatures } from "../../../hooks";
 
 const PlaybackControlsWrap = styled.div`
   display: flex;
@@ -17,10 +18,21 @@ export const PlaybackControls = () => {
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
-  const playing = hass.states[config.entity_id].state === "playing";
-  const shuffle = hass.states[config.entity_id].attributes?.shuffle ?? false;
-  const repeat: "one" | "all" | "off" =
-    hass.states[config.entity_id].attributes?.repeat ?? "off";
+  const player = hass.states[config.entity_id];
+
+  const {
+    attributes: { shuffle, repeat },
+  } = player;
+
+  const playing = player.state === "playing";
+
+  const {
+    supportPreviousTrack,
+    supportNextTrack,
+    supportsShuffle,
+    supportsRepeat,
+    supportsTogglePlayPause,
+  } = useSupportedFeatures(player);
 
   const togglePlayback = useCallback(() => {
     hass.callService("media_player", "media_play_pause", {
@@ -58,33 +70,43 @@ export const PlaybackControls = () => {
 
   return (
     <PlaybackControlsWrap>
-      <IconButton
-        size="small"
-        onClick={toggleShuffle}
-        Icon={shuffle ? "mdi:shuffle-variant" : "mdi:shuffle-disabled"}
-      />
-      <IconButton
-        size="large"
-        onClick={previousTrack}
-        Icon={"mdi:skip-previous"}
-      />
-      <IconButton
-        size="x-large"
-        onClick={togglePlayback}
-        Icon={playing ? "mdi:pause-circle" : "mdi:play-circle"}
-      />
-      <IconButton size="large" onClick={nextTrack} Icon={"mdi:skip-next"} />
-      <IconButton
-        size="small"
-        onClick={toggleRepeat}
-        Icon={
-          repeat === "one"
-            ? "mdi:repeat-once"
-            : repeat === "all"
-            ? "mdi:repeat"
-            : "mdi:repeat-off"
-        }
-      />
+      {supportsShuffle && (
+        <IconButton
+          size="small"
+          onClick={toggleShuffle}
+          Icon={shuffle ? "mdi:shuffle-variant" : "mdi:shuffle-disabled"}
+        />
+      )}
+      {supportPreviousTrack && (
+        <IconButton
+          size="large"
+          onClick={previousTrack}
+          Icon={"mdi:skip-previous"}
+        />
+      )}
+      {supportsTogglePlayPause && (
+        <IconButton
+          size="x-large"
+          onClick={togglePlayback}
+          Icon={playing ? "mdi:pause-circle" : "mdi:play-circle"}
+        />
+      )}
+      {supportNextTrack && (
+        <IconButton size="large" onClick={nextTrack} Icon={"mdi:skip-next"} />
+      )}
+      {supportsRepeat && (
+        <IconButton
+          size="small"
+          onClick={toggleRepeat}
+          Icon={
+            repeat === "one"
+              ? "mdi:repeat-once"
+              : repeat === "all"
+              ? "mdi:repeat"
+              : "mdi:repeat-off"
+          }
+        />
+      )}
     </PlaybackControlsWrap>
   );
 };

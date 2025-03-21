@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from "preact/hooks";
 import styled from "styled-components";
-import type { MediocreMassiveMediaPlayerCardConfig } from "../config";
+import type { MediocreMassiveMediaPlayerCardConfig } from "../../MediaPlayerCommon/config";
 import { Slider } from "../../Slider";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";

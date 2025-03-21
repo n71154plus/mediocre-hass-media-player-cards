@@ -15,9 +15,7 @@ const ImgOuter = styled.div`
   width: 100%;
 `;
 
-const ImgWrap = styled.div<{
-  shadowColor?: string;
-}>`
+const ImgWrap = styled.div`
   position: relative;
   aspect-ratio: 1;
   max-height: 95%;
@@ -26,25 +24,14 @@ const ImgWrap = styled.div<{
   align-self: center;
   margin-top: 8px;
   margin-bottom: 8px;
-  ${(props) =>
-    props.shadowColor ? `box-shadow: 0px 0px 8px ${props.shadowColor};` : ""}
+  box-shadow: 0px 0px 8px var(--clear-background-color);
 `;
 
 const Img = styled.img`
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-`;
-
-const NoAlbumArt = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  color: var(--card-background-color);
-  background-color: var(--primary-text-color);
-  opacity: 0.5;
+  background-color: var(--card-background-color);
 `;
 
 const SourceIndicator = styled.div<{ contrastColor?: string }>`
@@ -71,12 +58,11 @@ export const AlbumArt = () => {
   } = player.attributes;
   const state = player.state;
   // State for average color
-  const [averageColor, setAverageColor] = useState<string | null>(null);
   const [contrastColor, setContrastColor] = useState<string | null>(null);
 
   // Reset average color when album art changes
   useEffect(() => {
-    setAverageColor(null);
+    setContrastColor(null);
   }, [albumArt]);
 
   // Handle image load to calculate average color
@@ -87,25 +73,19 @@ export const AlbumArt = () => {
         .getPalette()
         .then((palette) => {
           if (palette.DarkVibrant && palette.LightVibrant) {
-            setAverageColor(
-              isDarkMode ? palette.DarkVibrant.hex : palette.LightVibrant.hex
-            ); // Use the vibrant color
             setContrastColor(
               isDarkMode
                 ? palette.DarkVibrant.bodyTextColor
                 : palette.LightVibrant.bodyTextColor
             );
           } else if (palette.DarkMuted && palette.LightMuted) {
-            setAverageColor(
-              isDarkMode ? palette.DarkMuted.hex : palette.LightMuted.hex
-            ); // Fallback to a muted color
             setContrastColor(
               isDarkMode
                 ? palette.DarkMutedt.bodyTextColor
                 : palette.DarkMuted.bodyTextColor
             );
           } else {
-            setAverageColor(undefined); // Default fallback color
+            setContrastColor(undefined);
           }
         })
         .catch((e) => {
@@ -115,23 +95,20 @@ export const AlbumArt = () => {
   };
   return (
     <ImgOuter>
-      <ImgWrap shadowColor={averageColor}>
-        {!!albumArt ? (
-          <Fragment>
-            <Img
-              src={albumArt}
-              alt={`${title} by ${artist}`}
-              onLoad={handleImageLoad}
-            />
-            <SourceIndicator contrastColor={contrastColor}>
-              <Icon size="xx-small" Icon={getIcon({ source, state })} />
-            </SourceIndicator>
-          </Fragment>
-        ) : (
-          <NoAlbumArt>
-            <Icon size="x-large" Icon={getIcon({ source, state })} />
-          </NoAlbumArt>
-        )}
+      <ImgWrap>
+        <Fragment>
+          <Img
+            src={
+              albumArt ??
+              "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='400'%20viewBox='0%200%20400%20400'%3E%3Crect%20width='400'%20height='400'%20fill='transparent'/%3E%3C/svg%3E"
+            }
+            alt={`${title} by ${artist}`}
+            onLoad={handleImageLoad}
+          />
+          <SourceIndicator contrastColor={contrastColor}>
+            <Icon size="x-small" Icon={getIcon({ source, state })} />
+          </SourceIndicator>
+        </Fragment>
       </ImgWrap>
     </ImgOuter>
   );

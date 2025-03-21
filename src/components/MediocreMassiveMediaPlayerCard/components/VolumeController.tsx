@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
 import { Slider } from "../../Slider";
-import { MediocreMassiveMediaPlayerCardConfig } from "../config";
+import { MediocreMassiveMediaPlayerCardConfig } from "../../MediaPlayerCommon/config";
 
 const VolumeContainer = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ export const VolumeController = () => {
         max={1}
         step={0.01}
         value={volume}
-        thumbSize={"small"}
+        thumbSize={"large"}
         onChange={handleVolumeChange}
       />
     </VolumeContainer>

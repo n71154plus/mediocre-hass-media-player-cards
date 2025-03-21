@@ -9,6 +9,11 @@ const Root = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  // Below gradient transitions from panel header color to transparent
+  background: linear-gradient(
+    var(--app-header-background-color),
+    rgba(255, 255, 255, 0)
+  );
   max-height: calc(100vh - var(--header-height, 16px));
   box-sizing: border-box;
   * {
@@ -34,7 +39,6 @@ const ControlsWrapper = styled.div`
   flex-direction: column;
   max-height: 300px;
   min-height: 280px;
-  overflow: auto;
   width: 100%;
   height: 100%;
   justify-content: space-between;

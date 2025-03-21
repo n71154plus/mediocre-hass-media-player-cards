@@ -5,14 +5,19 @@ export type SliderProps = {
   max: number;
   step: number;
   value: number;
-  thumbSize?: "xsmall" | "small" | "medium";
+  thumbSize?: HandleSize;
   onChange: (value: number) => void;
 };
 
-const SliderWrap = styled.div`
+export type HandleSize = "xsmall" | "small" | "medium" | "large";
+
+const SliderWrap = styled.div<{ thumbSize?: HandleSize }>`
   display: contents;
+
   > ha-slider {
     width: 100%;
+    --_handle-height: ${(props) => getHandleSize(props.thumbSize)} !important;
+    --_handle-width: ${(props) => getHandleSize(props.thumbSize)} !important;
   }
 `;
 
@@ -25,7 +30,7 @@ export const Slider = ({
   onChange,
 }: SliderProps) => {
   return (
-    <SliderWrap>
+    <SliderWrap thumbSize={thumbSize}>
       <ha-slider
         min={min}
         max={max}
@@ -37,4 +42,17 @@ export const Slider = ({
       />
     </SliderWrap>
   );
+};
+
+const getHandleSize = (thumbSize: HandleSize) => {
+  switch (thumbSize) {
+    case "xsmall":
+      return "8px";
+    case "small":
+      return "12px";
+    case "medium":
+      return "14px";
+    case "large":
+      return "16px";
+  }
 };

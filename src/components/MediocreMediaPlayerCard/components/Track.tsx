@@ -2,7 +2,7 @@ import { useContext, useMemo } from "preact/hooks";
 import styled from "styled-components";
 import { ProgressBar } from "../../ProgressBar";
 import { CardContext, CardContextType } from "../../../utils";
-import { MediocreMediaPlayerCardConfig } from "../config";
+import { MediocreMediaPlayerCardConfig } from "../../MediaPlayerCommon/config";
 
 const TimeWrap = styled.div`
   display: flex;

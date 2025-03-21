@@ -1,25 +1,12 @@
-import { render } from "preact";
 import {
   MediocreChipMediaPlayerGroupCard,
   MediocreChipMediaPlayerGroupCardConfig,
 } from "../components";
-import { CardContextProvider } from "../utils";
+import { PreactWrapper } from "../utils";
 
-class MediocreChipMediaPlayerGroupCardWrapper extends HTMLElement {
-  config: MediocreChipMediaPlayerGroupCardConfig = null;
-  content: HTMLElement = null;
+class MediocreChipMediaPlayerGroupCardWrapper extends PreactWrapper<MediocreChipMediaPlayerGroupCardConfig> {
+  Card = MediocreChipMediaPlayerGroupCard;
 
-  set hass(hass) {
-    render(
-      <CardContextProvider rootElement={this} hass={hass} config={this.config}>
-        <MediocreChipMediaPlayerGroupCard />
-      </CardContextProvider>,
-      this
-    );
-  }
-
-  // The user supplied configuration. Throw an exception and Home Assistant
-  // will render an error card.
   setConfig(config: MediocreChipMediaPlayerGroupCardConfig) {
     if (!config.entity_id) {
       throw new Error("You need to define an entity_id");
@@ -30,13 +17,10 @@ class MediocreChipMediaPlayerGroupCardWrapper extends HTMLElement {
     this.config = config;
   }
 
-  // The height of your card. Home Assistant uses this to automatically
-  // distribute all cards over the available columns in masonry view
   getCardSize() {
     return 1;
   }
 
-  // The rules for sizing your card in the grid in sections view
   getLayoutOptions() {
     return {
       grid_rows: 1,

@@ -22,6 +22,7 @@ const PlaybackControlsWrap = styled.div`
   width: 100%;
   position: relative;
   box-sizing: border-box;
+  box-shadow: 0 0px 80px var(--clear-background-color);
 `;
 
 const slideUpFadeIn = keyframes`
@@ -44,7 +45,7 @@ const ModalRoot = styled.div`
   border-radius: 12px;
   box-sizing: border-box;
   animation: ${slideUpFadeIn} 0.3s ease forwards;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 80px var(--clear-background-color);
 `;
 
 const ModalHeader = styled.div`
@@ -67,12 +68,12 @@ const ModalContent = styled.div<{ padding?: string }>`
 `;
 
 export const PlayerActions = () => {
-  const { hass, config } =
+  const { hass, config, rootElement } =
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
 
-  const { custom_buttons } = config;
+  const { entity_id, custom_buttons, speaker_group } = config;
 
   if (!custom_buttons || custom_buttons.length === 0) {
     return null;
@@ -86,6 +87,23 @@ export const PlayerActions = () => {
     },
     [selected]
   );
+
+  const moreInfoButtonProps = useActionProps({
+    rootElement,
+    hass,
+    actionConfig: {
+      tap_action: {
+        action: "more-info",
+      },
+      entity: entity_id,
+    },
+  });
+
+  const onTogglePower = useCallback(() => {
+    hass.callService("media_player", "toggle", {
+      entity_id,
+    });
+  }, [entity_id]);
 
   return (
     <PlaybackControlsWrap>
@@ -104,14 +122,22 @@ export const PlayerActions = () => {
       >
         <SpeakerGrouping />
       </Modal>
+      {!!speaker_group && (
+        <IconButton
+          size="small"
+          Icon={"mdi:speaker-multiple"}
+          onClick={() => toggleSelected("speaker-grouping")}
+        />
+      )}
       <IconButton
         size="small"
-        Icon={"mdi:speaker-multiple"}
-        onClick={() => toggleSelected("speaker-grouping")}
+        {...moreInfoButtonProps}
+        Icon="mdi:information"
       />
       {custom_buttons.map((button, index) => (
         <CustomButton key={index} button={button} type={"icon-button"} />
       ))}
+      <IconButton size="small" Icon={"mdi:power"} onClick={onTogglePower} />
       <VolumeTrigger onClick={() => toggleSelected("volume")} />
     </PlaybackControlsWrap>
   );

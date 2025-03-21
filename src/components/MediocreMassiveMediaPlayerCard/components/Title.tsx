@@ -14,6 +14,7 @@ const TitleWrap = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 100%;
   }
 `;
 

@@ -1,6 +1,6 @@
 import { CardContext, type CardContextType } from "../../utils";
 import { useCallback, useContext, useState } from "preact/hooks";
-import type { MediocreMediaPlayerCardConfig } from "./config";
+import type { MediocreMediaPlayerCardConfig } from "../MediaPlayerCommon/config";
 import styled from "styled-components";
 import {
   AlbumArt,
@@ -14,7 +14,7 @@ import {
 import { IconButton } from "../IconButton";
 import { VolumeSlider, VolumeTrigger } from "./components/VolumeSlider";
 import { Fragment } from "preact/jsx-runtime";
-import { useSupportedFeatures } from "./hooks/useSupportedFeatures";
+import { useSupportedFeatures } from "../../hooks/useSupportedFeatures";
 import { InteractionConfig } from "../../types";
 import { useActionProps } from "../../hooks";
 
