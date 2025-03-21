@@ -1,14 +1,14 @@
 # Mediocre Media Player Cards
 
-A collection of custom media player cards for Home Assistant that support speaker grouping and custom actions.
+A bunch of custom media player cards for Home Assistant that let you group speakers and do some custom actions.
 
-> **Note:** These cards were created primarily for personal use and are shared as-is. While they may be useful for others, they are not actively maintained as a public project, and support may be limited.
+> **Note:** These cards were made mainly for my own use and are shared as-is. They might be useful for you, but don't expect regular updates or support.
 
 ## Installation
 
-1. Download the latest release from the [releases page](https://github.com/antontanderup/mediocre-hass-media-player-cards/releases)
-2. Copy the JavaScript file to your `www/` directory in your Home Assistant configuration
-3. Add the resource to your Lovelace configuration:
+1. Grab the latest release from the [releases page](https://github.com/antontanderup/mediocre-hass-media-player-cards/releases)
+2. Copy the JavaScript file to your `www/` directory in your Home Assistant setup
+3. Add the resource to your Lovelace config:
 
 ```yaml
 resources:
@@ -22,7 +22,7 @@ resources:
 
 ### Mediocre Media Player Card
 
-A standard-sized media player card with speaker grouping support that fits well in dashboards.
+A standard-sized media player card with speaker grouping support that fits nicely in dashboards.
 
 ![Mediocre Media Player Card Screenshot](screenshots/mediocre-card.png)
 
@@ -39,9 +39,9 @@ speaker_group:
 
 ### Mediocre Massive Media Player Card
 
-A full-sized media player card designed specifically for panel view. This card provides an immersive media control experience with all features available at a glance.
+A full-sized media player card made for panel view. This card gives you an immersive media control experience with all features at a glance.
 
-**Note: This card is intended for panel view only and is not suitable for dashboard use.**
+**Note: This card is meant for panel view only and doesn't work well in dashboards.**
 
 ![Mediocre Massive Media Player Card Screenshot](screenshots/massive-card.png)
 
@@ -58,7 +58,7 @@ speaker_group:
 
 ## Configuration Options
 
-Both cards support the following configuration options:
+Both cards support these options:
 
 | Option                    | Type   | Default  | Description                                                      |
 | ------------------------- | ------ | -------- | ---------------------------------------------------------------- |
@@ -100,9 +100,9 @@ custom_buttons:
 
 ## Troubleshooting
 
-If you encounter issues:
+If you run into issues:
 
-1. Check that your entity supports the media player features required
+1. Check that your entity supports the media player features needed
 2. Verify your configuration syntax
 3. Look for errors in your browser's developer console
 
