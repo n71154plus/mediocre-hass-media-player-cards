@@ -24,7 +24,10 @@ resources:
 
 A standard-sized media player card with speaker grouping support that fits nicely in dashboards.
 
-![Mediocre Media Player Card Screenshot](screenshots/mediocre-card.png)
+![Mediocre Media Player Card Screenshot 1](https://github.com/user-attachments/assets/ac81afa5-205f-430b-ba3a-d488e329f112)
+![Mediocre Media Player Card Screenshot 2](https://github.com/user-attachments/assets/dd94d59e-258e-4195-9b9c-4e5b2b9ae9a1)
+![Mediocre Media Player Card Screenshot 3](https://github.com/user-attachments/assets/2178b5d4-ea8f-46cf-9737-149e1da935c5)
+
 
 #### Configuration
 
@@ -43,7 +46,8 @@ A full-sized media player card made for panel view. This card gives you an immer
 
 **Note: This card is meant for panel view only and doesn't work well in dashboards.**
 
-![Mediocre Massive Media Player Card Screenshot](screenshots/massive-card.png)
+![Mediocre Massive Media Player Card Screenshot](https://github.com/user-attachments/assets/8340e509-c7af-4a10-bbb1-8b8086a87e57)
+
 
 #### Configuration
 
