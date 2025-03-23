@@ -2,7 +2,6 @@
 
 <img src="https://github.com/user-attachments/assets/ac81afa5-205f-430b-ba3a-d488e329f112" width="500px" alt="Mediocre Media Player Card Screenshot 1" />
 
-
 A bunch of custom media player cards for Home Assistant that let you group speakers and do some custom actions.
 
 > **Note:** These cards were made mainly for my own use and are shared as-is. They might be useful for you, but don't expect regular updates or support.
@@ -48,7 +47,6 @@ A full-sized media player card made for panel view. This card gives you an immer
 **Note: This card is meant for panel view only and doesn't work well in dashboards.**
 
 <img src="https://github.com/user-attachments/assets/8340e509-c7af-4a10-bbb1-8b8086a87e57" width="500px" alt="Mediocre Massive Media Player Card Screenshot" />
-
 
 #### Configuration
 
@@ -102,6 +100,30 @@ custom_buttons:
       service_data:
         entity_id: media_player.living_room_speaker
 ```
+
+### Mediocre Chip Media Player Group Card
+
+A compact chip-style card for quickly grouping/ungrouping speakers. Perfect for dashboards where space is limited but you need quick access to speaker controls.
+
+<img src="https://github.com/user-attachments/assets/placeholder-image-id" width="500px" alt="Mediocre Chip Media Player Group Card Screenshot" />
+
+#### Configuration
+
+```yaml
+type: "custom:mediocre-chip-media-player-group-card"
+entity_id: media_player.living_room_speaker
+entities:
+  - media_player.kitchen_speaker
+  - media_player.bedroom_speaker
+  - media_player.bathroom_speaker
+```
+
+#### Configuration Options
+
+| Option      | Type   | Default  | Description                                                  |
+| ----------- | ------ | -------- | ------------------------------------------------------------ |
+| `entity_id` | string | Required | The entity ID of the main media player to group others with  |
+| `entities`  | array  | Required | List of entity IDs that can be grouped with the main speaker |
 
 ## Troubleshooting
 
