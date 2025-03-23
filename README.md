@@ -105,7 +105,7 @@ custom_buttons:
 
 A compact chip-style card for quickly grouping/ungrouping speakers. Perfect for dashboards where space is limited but you need quick access to speaker controls.
 
-<img src="https://github.com/user-attachments/assets/placeholder-image-id" width="500px" alt="Mediocre Chip Media Player Group Card Screenshot" />
+<img src="https://github.com/user-attachments/assets/96d2691c-e636-432a-87d9-f7dc33570ea6" width="500px" alt="Mediocre Chip Media Player Group Card Screenshot" />
 
 #### Configuration
 
