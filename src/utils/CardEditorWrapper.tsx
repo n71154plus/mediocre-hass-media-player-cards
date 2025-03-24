@@ -1,12 +1,11 @@
 import Preact, { render } from "preact";
 import { HomeAssistant } from "custom-card-helpers";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
 import { EmotionContextProvider } from "./EmotionContextProvider";
+import { GlanceGuard } from "./GlanceGuard";
 
 export type EditorCardProps<T> = {
   config: T;
-  updateConfig: (newConfig: T) => void;
+  rootElement: HTMLElement;
   hass: HomeAssistant;
 };
 
@@ -23,19 +22,13 @@ export class CardEditorWrapper<T> extends HTMLElement {
     this._config = config;
     render(
       <EmotionContextProvider rootElement={this}>
-        <this.Card
-          config={this._config}
-          hass={this._hass}
-          updateConfig={(newConfig: T) => {
-            const event = new Event("config-changed", {
-              bubbles: true,
-              composed: true,
-            });
-            // @ts-ignore
-            event.detail = { config: newConfig };
-            this.dispatchEvent(event);
-          }}
-        />
+        <GlanceGuard>
+          <this.Card
+            config={this._config}
+            hass={this._hass}
+            rootElement={this}
+          />
+        </GlanceGuard>
       </EmotionContextProvider>,
       this
     );

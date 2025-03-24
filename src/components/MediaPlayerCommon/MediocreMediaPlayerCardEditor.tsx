@@ -56,16 +56,29 @@ const InputGroup = styled.div`
 
 export const MediocreMediaPlayerCardEditor = ({
   config,
-  updateConfig,
+  rootElement,
   hass,
 }: {
   config: MediocreMediaPlayerCardConfig;
-  updateConfig: (config: MediocreMediaPlayerCardConfig) => void;
+  rootElement: HTMLElement;
   hass: HomeAssistant;
 }) => {
-  if (!config || !hass) {
+  if (!config || !hass || !rootElement) {
     console.error("No config or hass");
   }
+
+  const updateConfig = useCallback(
+    (newConfig: MediocreMediaPlayerCardConfig) => {
+      const event = new Event("config-changed", {
+        bubbles: true,
+        composed: true,
+      });
+      // @ts-ignore
+      event.detail = { config: newConfig };
+      rootElement.dispatchEvent(event);
+    },
+    [rootElement]
+  );
 
   // Direct update function - creates a new config object and calls updateConfig
   const updateField = useCallback(
@@ -164,7 +177,7 @@ export const MediocreMediaPlayerCardEditor = ({
       <FormGroup>
         <EntityPicker
           hass={hass}
-          value={safeConfig.entity_id || ""}
+          value={safeConfig.entity_id}
           onChange={(newValue) => updateField("entity_id", newValue)}
           label="Media Player Entity"
           domains={["media_player"]}
@@ -187,7 +200,7 @@ export const MediocreMediaPlayerCardEditor = ({
           <FormGroup>
             <EntityPicker
               hass={hass}
-              value={safeConfig.speaker_group.entity_id || ""}
+              value={safeConfig.speaker_group.entity_id}
               onChange={(newValue) =>
                 updateField("speaker_group.entity_id", newValue)
               }
@@ -199,13 +212,12 @@ export const MediocreMediaPlayerCardEditor = ({
           <FormGroup>
             <EntitiesPicker
               hass={hass}
-              value={safeConfig.speaker_group.entities || []}
+              value={safeConfig.speaker_group.entities}
               onChange={(newValue) =>
                 updateField("speaker_group.entities", newValue)
               }
               label="Speaker Group Entities (including main speaker)"
               domains={["media_player"]}
-              required
             />
           </FormGroup>
         </SubForm>

@@ -1,5 +1,13 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback } from "preact/hooks";
+import styled from "@emotion/styled";
+import { EntityPicker } from "./EntityPicker";
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
 export type EntitiesPickerProps = {
   hass: HomeAssistant;
@@ -7,7 +15,6 @@ export type EntitiesPickerProps = {
   onChange: (value?: string[]) => void; // returns new entity id or undefined
   label?: string;
   domains?: string[]; // Optional domain to filter entities
-  required?: boolean;
   disabled?: boolean;
   allowCustomEntity?: boolean;
 };
@@ -18,61 +25,65 @@ export const EntitiesPicker = ({
   onChange,
   label,
   domains,
-  required = false,
   disabled = false,
   allowCustomEntity = false,
 }: EntitiesPickerProps) => {
-  const formRef = useRef<HTMLElement | null>(null);
+  // Filter out undefined/null values
+  const entities = value?.filter(Boolean) || [];
 
-  // Handle form changes
-  const handleValueChanged = useCallback(
-    (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const newValue = customEvent.detail.value;
-      onChange(newValue);
+  // Handle individual entity change
+  const handleEntityChange = useCallback(
+    (newEntityId: string | undefined, index: number) => {
+      const newEntities = [...entities];
+
+      // If the value is empty and not the last one, remove it
+      if (!newEntityId && index < entities.length) {
+        newEntities.splice(index, 1);
+      }
+      // If we're changing an existing entity
+      else if (index < entities.length) {
+        newEntities[index] = newEntityId || "";
+      }
+      // If we're adding a new entity (from the empty slot)
+      else if (newEntityId) {
+        newEntities.push(newEntityId);
+      }
+
+      // Filter out any empty values that might have been added
+      onChange(newEntities.filter(Boolean));
     },
-    [onChange]
+    [entities, onChange]
   );
 
-  // Attach and cleanup event listener
-  useEffect(() => {
-    const formElement = formRef.current;
-
-    if (formElement) {
-      formElement.addEventListener("value-changed", handleValueChanged);
-    }
-
-    return () => {
-      if (formElement) {
-        formElement.removeEventListener("value-changed", handleValueChanged);
-      }
-    };
-  }, [formRef.current, handleValueChanged]);
-
-  const [isGlanceLoaded, setIsGlanceLoaded] = useState(false);
-  useEffect(() => {
-    // https://community.home-assistant.io/t/re-using-existing-frontend-components-in-lovelace-card-editor/103415/9
-    const glanceCard = customElements.get("hui-glance-card");
-    // @ts-ignore
-    glanceCard.getConfigElement().then(() => {
-      setIsGlanceLoaded(true);
-    });
-  }, []);
-
-  if (!isGlanceLoaded) {
-    return null;
-  }
-
   return (
-    <ha-entities-picker
-      ref={formRef as any}
-      hass={hass}
-      value={value}
-      label={label || "Entities"}
-      includeDomains={domains}
-      disabled={disabled}
-      required={required}
-      allow-custom-entity={allowCustomEntity}
-    />
+    <Root className="entities-picker">
+      {label && <label>{label}</label>}
+
+      {/* Render existing entities */}
+      {entities.map((entityId, index) => (
+        <EntityPicker
+          key={`entity-${index}`}
+          hass={hass}
+          value={entityId}
+          onChange={(value) => handleEntityChange(value, index)}
+          domains={domains}
+          disabled={disabled}
+          required={false}
+          allowCustomEntity={allowCustomEntity}
+        />
+      ))}
+
+      {/* Always add one empty picker at the end */}
+      <EntityPicker
+        key="entity-new"
+        hass={hass}
+        value=""
+        onChange={(value) => handleEntityChange(value, entities.length)}
+        domains={domains}
+        disabled={disabled}
+        required={false}
+        allowCustomEntity={allowCustomEntity}
+      />
+    </Root>
   );
 };
