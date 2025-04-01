@@ -4,9 +4,22 @@
 
 A bunch of custom media player cards for Home Assistant that let you group speakers and do some custom actions.
 
-> **Note:** These cards were made mainly for my own use and are shared as-is. They might be useful for you, but don't expect regular updates or support.
+> **Note:** This is a prerelease version, so you might encounter some bugs.
 
 ## Installation
+
+### HACS
+
+1. Open HACS in your Home Assistant instance
+2. Click the three dots in the top right corner
+3. Select "Custom repositories"
+4. Add `antontanderup/mediocre-hass-media-player-cards` as a repository
+5. Set category to "Dashboard"
+6. Click "Add"
+7. Search for "Mediocre Hass Media Player Cards"
+8. Install it and reload your browser
+
+### Manual Installation
 
 1. Grab the latest release from the [releases page](https://github.com/antontanderup/mediocre-hass-media-player-cards/releases)
 2. Copy the JavaScript file to your `www/` directory in your Home Assistant setup
@@ -156,9 +169,6 @@ These cards are built with Preact wrapped in web components. For local developme
 # Install dependencies
 yarn install
 
-# Start development server
-yarn dev
-
-# Build for production
+# Build it
 yarn build
 ```
