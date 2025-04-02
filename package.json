@@ -1,29 +1,17 @@
 {
   "name": "mediocre-hass-media-player-cards",
-  "private": true,
+  "private": false,
   "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/my-lib.umd.cjs",
-  "module": "./dist/my-lib.js",
-  "exports": {
-    ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
-    }
-  },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch --mode development & chmod +x ./scripts/dev-replace.sh && ./scripts/dev-replace.sh",
+    "dev:watch": "vite build --watch --mode development",
     "build": "vite build",
-    "preview": "vite preview",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "clsx": "^2.1.1",
     "custom-card-helpers": "^1.9.0",
     "node-vibrant": "^4.0.3",
     "preact": "^10.25.3"
