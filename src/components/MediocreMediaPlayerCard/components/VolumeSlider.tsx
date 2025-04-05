@@ -80,7 +80,7 @@ export const VolumeTrigger = ({
   setSliderVisible,
 }: {
   sliderVisible: boolean;
-  setSliderVisible: (boolean) => void;
+  setSliderVisible: (newValue: boolean) => void;
 }) => {
   const { hass, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);

@@ -1,7 +1,6 @@
 import { handleAction, HomeAssistant } from "custom-card-helpers";
 import {
   InteractionConfig,
-  ActionConfig,
   InteractionConfigLegacy,
 } from "../types/actionTypes";
 import { useMemo } from "preact/hooks";
