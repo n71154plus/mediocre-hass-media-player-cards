@@ -14,7 +14,9 @@ class MediocreMediaPlayerCardWrapper extends CardWrapper<MediocreMediaPlayerCard
   }
 
   static getConfigElement() {
-    return document.createElement("mediocre-media-player-card-editor");
+    return document.createElement(
+      import.meta.env.VITE_MEDIA_PLAYER_CARD_EDITOR
+    );
   }
 
   static getStubConfig(hass: HomeAssistant) {

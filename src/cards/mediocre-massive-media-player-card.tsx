@@ -14,7 +14,9 @@ class MediocreMassiveMediaPlayerCardWrapper extends CardWrapper<MediocreMassiveM
   }
 
   static getConfigElement() {
-    return document.createElement("mediocre-massive-media-player-card-editor");
+    return document.createElement(
+      import.meta.env.VITE_MASSIVE_MEDIA_PLAYER_CARD_EDITOR
+    );
   }
 
   static getStubConfig(hass: HomeAssistant) {
