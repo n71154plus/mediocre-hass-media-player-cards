@@ -1,5 +1,5 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { MediocreMassiveMediaPlayerCardConfig } from "../MediaPlayerCommon/config";
+import { MediocreMassiveMediaPlayerCardConfig } from "../../types/config";
 import { useCallback } from "preact/hooks";
 import {
   Button,
@@ -75,7 +75,7 @@ export const MediocreMassiveMediaPlayerCardEditor = ({
       {
         icon: "mdi:paper-roll",
         name: "New Button",
-        tap_action: { action: "toggle-menu" },
+        tap_action: { action: "toggle" },
       },
     ];
 

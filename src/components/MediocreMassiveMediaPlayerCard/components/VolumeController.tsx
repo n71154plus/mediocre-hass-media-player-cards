@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
 import { Slider } from "../../Slider";
-import { MediocreMassiveMediaPlayerCardConfig } from "../../MediaPlayerCommon";
+import { MediocreMassiveMediaPlayerCardConfig } from "../../../types";
 
 const VolumeContainer = styled.div`
   display: flex;

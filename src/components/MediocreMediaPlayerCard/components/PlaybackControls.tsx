@@ -2,7 +2,7 @@ import { useCallback, useContext } from "preact/hooks";
 import styled from "@emotion/styled";
 import { IconButton } from "../../IconButton";
 import { CardContext, CardContextType } from "../../../utils";
-import { MediocreMediaPlayerCardConfig } from "../../MediaPlayerCommon/config";
+import { MediocreMediaPlayerCardConfig } from "../../../types/config";
 import { useSupportedFeatures } from "../../../hooks/useSupportedFeatures";
 
 const PlaybackControlsWrap = styled.div`

@@ -1,6 +1,6 @@
 import { HomeAssistant } from "custom-card-helpers";
 import { MediocreMassiveMediaPlayerCard } from "../components";
-import { MediocreMassiveMediaPlayerCardConfig } from "../components/MediaPlayerCommon";
+import { MediocreMassiveMediaPlayerCardConfig } from "../types";
 import { CardWrapper } from "../utils";
 
 class MediocreMassiveMediaPlayerCardWrapper extends CardWrapper<MediocreMassiveMediaPlayerCardConfig> {
@@ -31,13 +31,13 @@ class MediocreMassiveMediaPlayerCardWrapper extends CardWrapper<MediocreMassiveM
 }
 
 customElements.define(
-  "mediocre-massive-media-player-card",
+  import.meta.env.VITE_MASSIVE_MEDIA_PLAYER_CARD,
   MediocreMassiveMediaPlayerCardWrapper
 );
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "mediocre-massive-media-player-card",
+  type: import.meta.env.VITE_MASSIVE_MEDIA_PLAYER_CARD,
   name: "Mediocre Massive Media Player Card",
   preview: true,
   description: "A media player card with player grouping support.", // Optional

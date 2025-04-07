@@ -1,6 +1,6 @@
 import { CardContext, type CardContextType } from "../../utils";
 import { useCallback, useContext, useState } from "preact/hooks";
-import type { MediocreMediaPlayerCardConfig } from "../MediaPlayerCommon/config";
+import type { MediocreMediaPlayerCardConfig } from "../../types/config";
 
 import {
   AlbumArt,
