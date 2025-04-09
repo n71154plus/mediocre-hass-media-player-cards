@@ -3,11 +3,11 @@ import styled from "@emotion/styled";
 import type {
   MediocreMassiveMediaPlayerCardConfig,
   MediocreMediaPlayerCardConfig,
-} from "../../../types/config";
-import { CardContext, CardContextType } from "../../../utils";
-import { InteractionConfig } from "../../../types/actionTypes";
-import { Chip } from "../../Chip";
-import { useActionProps } from "../../../hooks";
+} from "@types";
+import { CardContext, CardContextType } from "@components/CardContext";
+import { InteractionConfig } from "@types";
+import { Chip } from "@components";
+import { useActionProps } from "@hooks";
 
 const CustomButtonsContainer = styled.div`
   display: flex;
@@ -56,11 +56,10 @@ export const CustomButton = ({
     name?: string;
   };
 }) => {
-  const { hass, rootElement, config } =
+  const { rootElement, config } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
   const { icon, name, ...actionConfig } = button;
   const actionProps = useActionProps({
-    hass,
     rootElement,
     actionConfig: {
       ...actionConfig,

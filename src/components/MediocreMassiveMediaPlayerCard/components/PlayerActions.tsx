@@ -1,15 +1,18 @@
 import { useCallback, useContext, useState } from "preact/hooks";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { IconButton } from "../../IconButton";
-import { CardContext, CardContextType } from "../../../utils";
+import { IconButton } from "@components";
+import { CardContext, CardContextType } from "@components/CardContext";
 import { Fragment, ReactNode } from "preact/compat";
 import { VolumeController, VolumeTrigger } from "./VolumeController";
 import { SpeakerGrouping } from "./SpeakerGrouping";
-import { InteractionConfig } from "../../../types";
-import { useActionProps } from "../../../hooks";
-import { MediocreMassiveMediaPlayerCardConfig } from "../../../types";
+import { useActionProps } from "@hooks";
+import {
+  MediocreMassiveMediaPlayerCardConfig,
+  InteractionConfig,
+} from "@types";
 import { CustomButtons } from "./CustomButtons";
+import { getHass } from "@utils";
 
 const PlaybackControlsWrap = styled.div`
   background-color: var(--card-background-color);
@@ -69,7 +72,7 @@ const ModalContent = styled.div<{ padding?: string }>`
 `;
 
 export const PlayerActions = () => {
-  const { hass, config } =
+  const { config } =
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
@@ -88,7 +91,7 @@ export const PlayerActions = () => {
   );
 
   const onTogglePower = useCallback(() => {
-    hass.callService("media_player", "toggle", {
+    getHass().callService("media_player", "toggle", {
       entity_id,
     });
   }, [entity_id]);
@@ -181,13 +184,12 @@ export const CustomButton = ({
     name?: string;
   };
 }) => {
-  const { hass, rootElement, config } =
+  const { rootElement, config } =
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
-  const { icon, name, ...actionConfig } = button;
+  const { icon: _icon, name: _name, ...actionConfig } = button;
   const actionProps = useActionProps({
-    hass,
     rootElement,
     actionConfig: {
       ...actionConfig,

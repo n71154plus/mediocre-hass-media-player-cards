@@ -1,18 +1,21 @@
 import { useContext, useMemo } from "preact/hooks";
 import {
   CardContext,
-  CardContextProvider,
   CardContextType,
-} from "../../../utils";
-import { MediocreMassiveMediaPlayerCard } from "../../MediocreMassiveMediaPlayerCard";
-import { IconButton } from "../../IconButton/IconButton";
-
+  CardContextProvider,
+} from "@components/CardContext";
+import {
+  MediocreMassiveMediaPlayerCard,
+  IconButton,
+  Icon,
+  useHass,
+  usePlayer,
+} from "@components";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { Icon } from "../../Icon";
 import { getDeviceIcon } from "./PlayerInfo";
-import { useActionProps } from "../../../hooks";
-import { MediocreMediaPlayerCardConfig } from "../../../types";
+import { useActionProps } from "@hooks";
+import { MediocreMediaPlayerCardConfig } from "@types";
 
 const slideUp = keyframes`
   from {
@@ -117,15 +120,18 @@ export const MassivePopUp = ({
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }) => {
-  const { hass, config, rootElement } =
+  const hass = useHass();
+  const { config, rootElement } =
     useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
 
   const { entity_id, speaker_group } = config;
   const {
-    friendly_name: friendlyName,
-    icon,
-    device_class: deviceClass,
-  } = hass.states[entity_id].attributes;
+    attributes: {
+      friendly_name: friendlyName,
+      icon,
+      device_class: deviceClass,
+    },
+  } = usePlayer();
 
   const groupMembers =
     hass.states[speaker_group?.entity_id ?? entity_id]?.attributes
@@ -133,7 +139,7 @@ export const MassivePopUp = ({
   const mdiIcon = getDeviceIcon({ icon, deviceClass });
 
   const massiveConfig = useMemo(() => {
-    const { tap_opens_popup, ...commonConfig } = config;
+    const { tap_opens_popup: _tap_opens_popup, ...commonConfig } = config;
     return {
       ...commonConfig,
       mode: "popup",
@@ -142,7 +148,6 @@ export const MassivePopUp = ({
 
   const moreInfoButtonProps = useActionProps({
     rootElement,
-    hass,
     actionConfig: {
       tap_action: {
         action: "more-info",
@@ -178,11 +183,7 @@ export const MassivePopUp = ({
           />
         </PopUpHeader>
         <PopUpContent>
-          <CardContextProvider
-            rootElement={rootElement}
-            hass={hass}
-            config={massiveConfig}
-          >
+          <CardContextProvider rootElement={rootElement} config={massiveConfig}>
             <PopupMediocreMassiveMediaPlayerCard />
           </CardContextProvider>
         </PopUpContent>

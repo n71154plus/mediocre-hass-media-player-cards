@@ -1,8 +1,6 @@
-import { useContext } from "preact/hooks";
-import { CardContext, CardContextType } from "../../../utils";
-import { MediocreMediaPlayerCardConfig } from "../../../types/config";
 import { Fragment } from "preact/jsx-runtime";
 import styled from "@emotion/styled";
+import { usePlayer } from "@components/PlayerContext";
 
 const TitleText = styled.h3`
   margin: 0;
@@ -24,17 +22,15 @@ const ArtistText = styled.p`
 `;
 
 export const MetaInfo = () => {
-  const { hass, config } =
-    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
-  const { entity_id } = config;
   const {
-    media_title: title,
-    media_artist: artist,
-    media_album_name: albumName,
-    source,
-    friendly_name: friendlyName,
-  } = hass.states[entity_id].attributes;
-
+    attributes: {
+      media_title: title,
+      media_artist: artist,
+      media_album_name: albumName,
+      source,
+      friendly_name: friendlyName,
+    },
+  } = usePlayer();
   const titleText = title ?? source ?? friendlyName;
   const artistText = `${albumName !== title ? `${albumName} - ` : ""}${artist}`;
 

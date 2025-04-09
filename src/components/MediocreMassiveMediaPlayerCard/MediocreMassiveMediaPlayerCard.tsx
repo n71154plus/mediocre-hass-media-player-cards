@@ -3,10 +3,9 @@ import { PlaybackControls } from "./components/PlaybackControls";
 import styled from "@emotion/styled";
 import { PlayerActions } from "./components/PlayerActions";
 import { useContext } from "preact/hooks";
-import { CardContext, CardContextType } from "../../utils";
-import { MediocreMassiveMediaPlayerCardConfig } from "../../types";
-import { FC } from "preact/compat";
-import { useArtworkColors } from "../../hooks/useArtworkColors";
+import { CardContext, CardContextType } from "@components/CardContext";
+import { MediocreMassiveMediaPlayerCardConfig } from "@types";
+import { useArtworkColors } from "@hooks";
 
 const Root = styled.div<{
   mode: MediocreMassiveMediaPlayerCardConfig["mode"];
@@ -100,17 +99,18 @@ const ControlsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const MediocreMassiveMediaPlayerCard: FC<{
+export const MediocreMassiveMediaPlayerCard = ({
+  className,
+}: {
   className?: string;
-}> = ({ className }) => {
-  const { config, hass } =
+}) => {
+  const { config } =
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
-  const { mode, entity_id, use_art_colors = true } = config;
+  const { mode, use_art_colors = true } = config;
 
-  const entity = hass.states[entity_id];
-  const { artVars, haVars } = useArtworkColors(entity);
+  const { artVars, haVars } = useArtworkColors();
 
   const renderRoot = () => (
     <Root

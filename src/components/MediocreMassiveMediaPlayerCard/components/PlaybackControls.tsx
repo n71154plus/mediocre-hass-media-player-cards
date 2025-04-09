@@ -1,9 +1,10 @@
 import { useCallback, useContext } from "preact/hooks";
 import styled from "@emotion/styled";
-import { IconButton } from "../../IconButton";
-import { CardContext, CardContextType } from "../../../utils";
-import { useSupportedFeatures } from "../../../hooks";
-import { MediocreMassiveMediaPlayerCardConfig } from "../../../types";
+import { IconButton, usePlayer } from "@components";
+import { CardContext, CardContextType } from "@components/CardContext";
+import { useSupportedFeatures } from "@hooks";
+import { MediocreMassiveMediaPlayerCardConfig } from "@types";
+import { getHass } from "@utils";
 
 const PlaybackControlsWrap = styled.div`
   display: flex;
@@ -14,17 +15,17 @@ const PlaybackControlsWrap = styled.div`
 `;
 
 export const PlaybackControls = () => {
-  const { hass, config } =
+  const { config } =
     useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
       CardContext
     );
-  const player = hass.states[config.entity_id];
 
   const {
     attributes: { shuffle, repeat },
-  } = player;
+    state,
+  } = usePlayer();
 
-  const playing = player.state === "playing";
+  const playing = state === "playing";
 
   const {
     supportPreviousTrack,
@@ -32,28 +33,28 @@ export const PlaybackControls = () => {
     supportsShuffle,
     supportsRepeat,
     supportsTogglePlayPause,
-  } = useSupportedFeatures(player);
+  } = useSupportedFeatures();
 
   const togglePlayback = useCallback(() => {
-    hass.callService("media_player", "media_play_pause", {
+    getHass().callService("media_player", "media_play_pause", {
       entity_id: config.entity_id,
     });
   }, []);
 
   const nextTrack = useCallback(() => {
-    hass.callService("media_player", "media_next_track", {
+    getHass().callService("media_player", "media_next_track", {
       entity_id: config.entity_id,
     });
   }, []);
 
   const previousTrack = useCallback(() => {
-    hass.callService("media_player", "media_previous_track", {
+    getHass().callService("media_player", "media_previous_track", {
       entity_id: config.entity_id,
     });
   }, []);
 
   const toggleShuffle = useCallback(() => {
-    hass.callService("media_player", "shuffle_set", {
+    getHass().callService("media_player", "shuffle_set", {
       entity_id: config.entity_id,
       shuffle: !shuffle,
     });
@@ -62,7 +63,7 @@ export const PlaybackControls = () => {
   const toggleRepeat = useCallback(() => {
     const newRepeat =
       repeat === "off" ? "one" : repeat === "one" ? "all" : "off";
-    hass.callService("media_player", "repeat_set", {
+    getHass().callService("media_player", "repeat_set", {
       entity_id: config.entity_id,
       repeat: newRepeat,
     });

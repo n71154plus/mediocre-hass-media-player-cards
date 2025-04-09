@@ -1,10 +1,8 @@
-import { useCallback, useContext, useMemo } from "preact/hooks";
+import { useCallback, useMemo } from "preact/hooks";
 import styled from "@emotion/styled";
-import { IconButton } from "../../IconButton";
-import { CardContext, CardContextType } from "../../../utils";
-import { MediocreMediaPlayerCardConfig } from "../../../types/config";
-import { Slider } from "../../Slider";
+import { IconButton, Slider, usePlayer } from "@components";
 import { Fragment } from "preact/jsx-runtime";
+import { getHass } from "@utils";
 
 const VolumeContainer = styled.div`
   display: flex;
@@ -20,18 +18,15 @@ const ControlButton = styled(IconButton)<{ muted?: boolean }>`
 `;
 
 export const VolumeSlider = () => {
-  const { hass, config } =
-    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
-  const { entity_id } = config;
-  const player = hass.states[entity_id];
-
+  const player = usePlayer();
+  const entity_id = player.entity_id;
   const volume = player.attributes?.volume_level ?? 0;
   const volumeMuted = player.attributes?.is_volume_muted ?? false;
 
   // Handle volume change
   const handleVolumeChange = useCallback((newVolume: number) => {
     // Set the volume level
-    hass.callService("media_player", "volume_set", {
+    getHass().callService("media_player", "volume_set", {
       entity_id,
       volume_level: newVolume,
     });
@@ -39,7 +34,7 @@ export const VolumeSlider = () => {
 
   // Handle mute toggle
   const handleToggleMute = useCallback(() => {
-    hass.callService("media_player", "volume_mute", {
+    getHass().callService("media_player", "volume_mute", {
       entity_id,
       is_volume_muted: !volumeMuted,
     });
@@ -82,10 +77,7 @@ export const VolumeTrigger = ({
   sliderVisible: boolean;
   setSliderVisible: (newValue: boolean) => void;
 }) => {
-  const { hass, config } =
-    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
-  const { entity_id } = config;
-  const player = hass.states[entity_id];
+  const player = usePlayer();
 
   const volume = player.attributes?.volume_level ?? 0;
   const volumeMuted = player.attributes?.is_volume_muted ?? false;
