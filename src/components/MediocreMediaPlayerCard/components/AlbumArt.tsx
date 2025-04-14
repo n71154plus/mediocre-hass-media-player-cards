@@ -33,6 +33,8 @@ const AlbumArtImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  color: transparent; /* Hide alt text if it shows */
+  text-indent: -10000px; /* Move alt text off-screen */
 `;
 
 const NoAlbumArt = styled.div`
@@ -89,7 +91,14 @@ export const AlbumArt = ({
     >
       {albumArt ? (
         <Fragment>
-          <AlbumArtImage src={albumArt} alt={`${title} by ${artist}`} />
+          <AlbumArtImage
+            src={albumArt}
+            alt={
+              !!title && !!artist
+                ? `${title} by ${artist}`
+                : `Source: ${source}`
+            }
+          />
           <SourceIndicator>
             <Icon size="xx-small" icon={getIcon({ source })} />
           </SourceIndicator>
