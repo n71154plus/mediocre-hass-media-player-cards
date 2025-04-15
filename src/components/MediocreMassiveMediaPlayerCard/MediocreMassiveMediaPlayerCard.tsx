@@ -16,6 +16,7 @@ const Root = styled.div<{
   display: flex;
   justify-content: center;
   align-items: center;
+  --mmpc-extra-horizontal-padding: 0px;
 
   ${props => props.$artColorVars ?? ""}
   ${props => {
@@ -38,6 +39,10 @@ const Root = styled.div<{
           max-height: calc(100vh - var(--header-height, 16px));
         `;
       }
+      case "popup": {
+        return `
+          --mmpc-extra-horizontal-padding: 12px;`;
+      }
       default: {
         return ``;
       }
@@ -55,6 +60,7 @@ const Wrap = styled.div<{
   mode: MediocreMassiveMediaPlayerCardConfig["mode"];
 }>`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 16px;
   justify-content: space-around;
