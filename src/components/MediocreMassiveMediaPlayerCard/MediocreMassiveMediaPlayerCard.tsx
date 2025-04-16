@@ -1,4 +1,4 @@
-import { AlbumArt, Title, Track } from "./components";
+import { Title, Track } from "./components";
 import { PlaybackControls } from "./components/PlaybackControls";
 import styled from "@emotion/styled";
 import { PlayerActions } from "./components/PlayerActions";
@@ -6,6 +6,7 @@ import { useContext } from "preact/hooks";
 import { CardContext, CardContextType } from "@components/CardContext";
 import { MediocreMassiveMediaPlayerCardConfig } from "@types";
 import { useArtworkColors } from "@hooks";
+import { AlbumArt } from "@components";
 
 const Root = styled.div<{
   mode: MediocreMassiveMediaPlayerCardConfig["mode"];
@@ -129,7 +130,7 @@ export const MediocreMassiveMediaPlayerCard = ({
       $useArtColors={use_art_colors}
     >
       <Wrap mode={mode}>
-        <AlbumArt />
+        <AlbumArt iconSize="x-large" borderRadius={8} />
         <ControlsWrapper>
           <Title />
           <Track />
