@@ -46,7 +46,7 @@ const CardContent = styled.div<{ $isOn: boolean; $useArtColors?: boolean }>`
   display: flex;
   gap: 14px;
   padding: 12px;
-  opacity: ${props => (props.isOn ? 1 : 0.7)};
+  opacity: ${props => (props.$isOn ? 1 : 0.7)};
   transition: opacity 0.3s ease;
   position: relative;
 `;
@@ -113,7 +113,7 @@ export const MediocreMediaPlayerCard = () => {
     !supportedFeatures.supportsRepeat;
 
   // Determine if the player is on
-  const isOn = !["off", "unavailable"].includes(state);
+  const isOn = state !== "off" && state !== "unavailable";
 
   // Check if grouping is available
   const hasGroupingFeature =
