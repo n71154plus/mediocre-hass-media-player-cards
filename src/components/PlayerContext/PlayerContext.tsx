@@ -21,8 +21,8 @@ export const PlayerContextProvider = ({
 }: {
   entityId: string;
   hass: HomeAssistant;
-  children: React.ReactElement;
-}): React.ReactElement => {
+  children: preact.ComponentChildren;
+}): preact.ComponentChildren => {
   const contextValue = useMemo(() => {
     const player = hass.states[entityId] as MediaPlayerEntity;
 
@@ -51,7 +51,7 @@ export const PlayerContextProvider = ({
 
     const title =
       (mediaTitle !== "" ? mediaTitle : undefined) ??
-      (!source.startsWith("media_player.") ? source : undefined) ??
+      (!!source && !source.startsWith("media_player.") ? source : undefined) ??
       friendlyName;
     const subtitle =
       !!albumName || !!artist

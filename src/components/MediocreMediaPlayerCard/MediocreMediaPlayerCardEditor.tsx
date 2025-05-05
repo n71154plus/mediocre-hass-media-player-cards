@@ -208,7 +208,6 @@ export const MediocreMediaPlayerCardEditor = ({
               domains={["media_player"]}
             />
           </FormGroup>
-          <Label>Select Speakers (including main speaker)</Label>
           <FormGroup>
             <EntitiesPicker
               hass={hass}
@@ -216,7 +215,21 @@ export const MediocreMediaPlayerCardEditor = ({
               onChange={newValue =>
                 updateField("speaker_group.entities", newValue)
               }
-              label="Speaker Group Entities (including main speaker)"
+              label="Select Speakers (including main speaker)"
+              domains={["media_player"]}
+            />
+          </FormGroup>
+        </SubForm>
+      </FormGroup>
+
+      <FormGroup>
+        <SubForm title="Music Assistant Configuration (optional)">
+          <FormGroup>
+            <EntityPicker
+              hass={hass}
+              value={safeConfig.ma_entity_id}
+              onChange={newValue => updateField("ma_entity_id", newValue)}
+              label="Music Assistant Entity ID (Optional)"
               domains={["media_player"]}
             />
           </FormGroup>
