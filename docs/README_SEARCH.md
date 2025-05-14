@@ -10,13 +10,13 @@ Here is an example configuration to enable Music Assistant search:
 ```yaml
 type: "custom:mediocre-media-player-card"
 entity_id: media_player.living_room
-ma_entity_id: media_assistant.living_room_ma
+ma_entity_id: media_player.living_room_ma
 ```
 
 ### Explanation
 
 - `entity_id`: Set this to the media player entity ID (e.g., `media_player.living_room`). This can also just be the Music Assistant media player entity.
-- `ma_entity_id`: Specify the Music Assistant entity ID (e.g., `media_assistant.living_room_ma`). This enables Music Assistant-specific features, including search. You need to specify this even if your main entity_id is the same as your Music Assistant entity_id. This allows you to use the card with a different entity_id than your Music Assistant but trigger actions on a Music Assistant entity.
+- `ma_entity_id`: Specify the Music Assistant entity ID (e.g., `media_player.living_room_ma`). This enables Music Assistant-specific features, including search. You need to specify this even if your main entity_id is the same as your Music Assistant entity_id. This allows you to use the card with a different entity_id than your Music Assistant but trigger actions on a Music Assistant entity.
 
 ## How to Use Search
 
