@@ -2,7 +2,7 @@
 
 <img src="https://github.com/user-attachments/assets/2ba5d55d-6fd3-4508-ae1c-60d9f22ebe81" width="500px" alt="Mediocre Media Player Card Screenshot 1" />
 
-Media player cards for Home Assistant that let you group speakers, add custom action buttons, search for music and more.
+Media player cards for Home Assistant that let you group speakers, add custom action buttons, search for music and more. A visual editor is available for all media player card configuration options.
 
 > **Note:** This is a pretty new project, so you might encounter some bugs. If you do, please do report them.
 
@@ -113,6 +113,7 @@ action:
 ```
 
 ### Custom Buttons
+
 ![image](https://github.com/user-attachments/assets/5cb62175-25fc-4594-a003-89a801320aba)
 
 You can add custom buttons with specific actions:
@@ -135,6 +136,7 @@ custom_buttons:
 ```
 
 ## Music Assistant Integration
+
 ![image](https://github.com/user-attachments/assets/83ae321a-3abf-4e73-8493-6ef54efa5140)
 
 Both the Mediocre Media Player Card and the Mediocre Massive Media Player Card support Music Assistant. By specifying a `ma_entity_id`, you can enable Music Assistant-specific features (currently just search). Even if your main entity_id is the same as your music assistant entity_id you need to specify it in the `ma_entity_id`. This allows you to use the card with a different entity_id than your music assistant but trigger actions on a music assistant entity.
@@ -174,6 +176,10 @@ entities:
 | ----------- | ------ | -------- | ------------------------------------------------------------ |
 | `entity_id` | string | Required | The entity ID of the main media player to group others with  |
 | `entities`  | array  | Required | List of entity IDs that can be grouped with the main speaker |
+
+## Search Functionality
+
+Both the Mediocre Media Player Card and the Mediocre Massive Media Player Card support search functionality. By specifying a `ma_entity_id`, you can enable Music Assistant-specific search features directly within the card. Alternatively, enabling the `search.enabled` option will use the regular Home Assistant `search_media` functionality. Read more about configuring the cards for search [here](./docs/README_SEARCH.md).
 
 ## Additional Documentation
 

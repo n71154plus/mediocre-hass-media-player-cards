@@ -145,6 +145,7 @@ export const MediocreMediaPlayerCardEditor = ({
     use_art_colors: config.use_art_colors ?? false,
     speaker_group: config.speaker_group || { entity_id: "", entities: [] },
     custom_buttons: config.custom_buttons || [],
+    search: config.search || { enabled: false },
   };
 
   return (
@@ -223,6 +224,29 @@ export const MediocreMediaPlayerCardEditor = ({
       </FormGroup>
 
       <FormGroup>
+        <SubForm title="Search (optional)">
+          <FormGroup>
+            <ToggleContainer>
+              <Toggle
+                type="checkbox"
+                id="search.enabled"
+                checked={safeConfig.search.enabled}
+                onChange={e => updateField("search.enabled", e.target.checked)}
+              />
+              <ToggleLabel htmlFor="search.enabled">Enable Search</ToggleLabel>
+            </ToggleContainer>
+            <EntityPicker
+              hass={hass}
+              value={safeConfig.search.entity_id}
+              onChange={newValue => updateField("search.entity_id", newValue)}
+              label="Search target (Optional, if not set, will use the main entity_id)"
+              domains={["media_player"]}
+            />
+          </FormGroup>
+        </SubForm>
+      </FormGroup>
+
+      <FormGroup>
         <SubForm title="Music Assistant Configuration (optional)">
           <FormGroup>
             <EntityPicker
@@ -237,52 +261,54 @@ export const MediocreMediaPlayerCardEditor = ({
       </FormGroup>
 
       <FormGroup>
-        <ButtonsContainer>
-          {safeConfig.custom_buttons.map((button, index) => {
-            const { name, icon, ...interactions } = button;
-            return (
-              <SubForm title={`Button ${index} - ${button.name}`} key={index}>
-                <FormGroup>
-                  <InputGroup>
-                    <TextInput
-                      value={name || ""}
-                      onChange={e => updateCustomButton(index, "name", e)}
-                      hass={hass}
-                      label={"Name"}
-                    />
-                  </InputGroup>
+        <SubForm title="Custom Buttons (optional)">
+          <ButtonsContainer>
+            {safeConfig.custom_buttons.map((button, index) => {
+              const { name, icon, ...interactions } = button;
+              return (
+                <SubForm title={`Button ${index} - ${button.name}`} key={index}>
+                  <FormGroup>
+                    <InputGroup>
+                      <TextInput
+                        value={name || ""}
+                        onChange={e => updateCustomButton(index, "name", e)}
+                        hass={hass}
+                        label={"Name"}
+                      />
+                    </InputGroup>
 
-                  <InputGroup>
-                    <TextInput
-                      value={icon || ""}
-                      onChange={e => updateCustomButton(index, "icon", e)}
+                    <InputGroup>
+                      <TextInput
+                        value={icon || ""}
+                        onChange={e => updateCustomButton(index, "icon", e)}
+                        hass={hass}
+                        isIconInput
+                        label={"Icon"}
+                      />
+                    </InputGroup>
+                    <Label>Interactions</Label>
+                    <InteractionsPicker
                       hass={hass}
-                      isIconInput
-                      label={"Icon"}
+                      value={interactions}
+                      onChange={newValue =>
+                        updateButtonInteractions(index, newValue)
+                      }
                     />
-                  </InputGroup>
-                  <Label>Interactions</Label>
-                  <InteractionsPicker
-                    hass={hass}
-                    value={interactions}
-                    onChange={newValue =>
-                      updateButtonInteractions(index, newValue)
-                    }
-                  />
-                </FormGroup>
-                <DeleteButton
-                  type="button"
-                  onClick={() => removeCustomButton(index)}
-                >
-                  Remove Button
-                </DeleteButton>
-              </SubForm>
-            );
-          })}
-          <Button type="button" onClick={addCustomButton}>
-            Add Custom Button
-          </Button>
-        </ButtonsContainer>
+                  </FormGroup>
+                  <DeleteButton
+                    type="button"
+                    onClick={() => removeCustomButton(index)}
+                  >
+                    Remove Button
+                  </DeleteButton>
+                </SubForm>
+              );
+            })}
+            <Button type="button" onClick={addCustomButton}>
+              Add Custom Button
+            </Button>
+          </ButtonsContainer>
+        </SubForm>
       </FormGroup>
     </form>
   );
