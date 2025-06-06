@@ -9,7 +9,6 @@ import {
 import {
   MaMediaType,
   MaFilterType,
-  MaFilterConfig,
   MaArtist,
   MaAlbum,
   MaTrack,
@@ -21,37 +20,8 @@ import {
 } from "./types";
 import { useSearchQuery } from "./useSearchQuery";
 import { Fragment } from "preact";
-
-const filters: MaFilterConfig[] = [
-  { type: "all", label: "All", icon: "mdi:all-inclusive" },
-  { type: "artist", label: "Artists", icon: "mdi:account-music" },
-  { type: "album", label: "Albums", icon: "mdi:album" },
-  { type: "track", label: "Tracks", icon: "mdi:music-note" },
-  { type: "playlist", label: "Playlists", icon: "mdi:playlist-music" },
-  { type: "radio", label: "Radio", icon: "mdi:radio" },
-  { type: "audiobook", label: "Audiobooks", icon: "mdi:book" },
-  { type: "podcast", label: "Podcasts", icon: "mdi:podcast" },
-];
-
-const responseKeyMediaTypeMap: { [key: string]: MaMediaType } = {
-  artists: "artist",
-  albums: "album",
-  tracks: "track",
-  playlists: "playlist",
-  radio: "radio",
-  audiobooks: "audiobook",
-  podcasts: "podcast",
-};
-
-const labelMap: { [key in MaMediaType]: string } = {
-  artist: "Artists",
-  album: "Albums",
-  track: "Tracks",
-  playlist: "Playlists",
-  radio: "Radio",
-  audiobook: "Audiobooks",
-  podcast: "Podcasts",
-};
+import { useFavorites } from "./useFavorites";
+import { filters, labelMap, responseKeyMediaTypeMap } from "./constants";
 
 export type MaSearchProps = {
   maEntityId: string;
@@ -86,6 +56,8 @@ export const MaSearch = ({
     debouncedQuery,
     activeFilter
   );
+
+  const { favorites } = useFavorites(activeFilter, query === "");
 
   const renderSearchBar = () => {
     return (
@@ -183,7 +155,9 @@ export const MaSearch = ({
                   name={item.name}
                   artist={
                     "artists" in item
-                      ? item.artists.map(artist => artist.name).join(", ")
+                      ? (item as MaAlbum).artists
+                          .map(artist => artist.name)
+                          .join(", ")
                       : undefined
                   }
                   onClick={() => playItem(item, maEntityId, enqueueMode)}
@@ -211,7 +185,7 @@ export const MaSearch = ({
       }}
     >
       {searchBarPosition === "top" && renderSearchBar()}
-      {results && (
+      {query !== "" && results && (
         <div
           css={
             searchBarPosition === "bottom"
@@ -220,6 +194,19 @@ export const MaSearch = ({
           }
         >
           {Object.entries(results).map(([key, value]) => {
+            return renderResult(value, responseKeyMediaTypeMap[key]);
+          })}
+        </div>
+      )}
+      {query === "" && favorites && (
+        <div
+          css={
+            searchBarPosition === "bottom"
+              ? searchStyles.resultsContainerSearchBarBottom
+              : {}
+          }
+        >
+          {Object.entries(favorites).map(([key, value]) => {
             return renderResult(value, responseKeyMediaTypeMap[key]);
           })}
         </div>
