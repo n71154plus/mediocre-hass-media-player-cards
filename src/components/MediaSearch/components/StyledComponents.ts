@@ -5,7 +5,7 @@ export const searchStyles = {
     display: "flex",
     flexDirection: "column",
     gap: "12px",
-    "--mmpc-search-padding": "var(--mmpc-search-padding, 0px)",
+    overflow: "hidden",
   }),
   rootSearchBarBottom: css({
     overflow: "hidden",
@@ -14,6 +14,7 @@ export const searchStyles = {
     display: "flex",
     flexDirection: "column",
     gap: 12,
+    marginBottom: 12,
   }),
   searchInput: css({ padding: "1px var(--mmpc-search-padding, 0px)" }),
   filterContainer: css({
@@ -41,18 +42,6 @@ export const searchStyles = {
     alignSelf: "center",
     borderRight: "1px solid var(--divider-color)",
     marginRight: "6px",
-  }),
-  mediaGrid: css({
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-    gridGap: "8px",
-    padding: "0px var(--mmpc-search-padding, 0px)",
-  }),
-  trackListContainer: css({
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-    padding: "0px var(--mmpc-search-padding, 0px)",
   }),
   mediaEmptyText: css({
     padding: "0px var(--mmpc-search-padding, 0px)",

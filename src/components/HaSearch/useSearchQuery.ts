@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import { getHass } from "@utils";
 import {
   HaEnqueueMode,
-  HaFilterResult,
   HaFilterType,
   HaMediaItem,
   HaSearchResponse,
@@ -69,57 +68,8 @@ export const useSearchQuery = (
     []
   );
 
-  const resultsParsed: HaFilterResult = useMemo(() => {
-    return [
-      {
-        type: "artists",
-        label: "Artists",
-        icon: "mdi:account-music",
-        results:
-          results?.result.filter(
-            item =>
-              item.media_content_type === "artists" ||
-              item.media_class === "artist"
-          ) ?? [],
-      },
-      {
-        type: "albums",
-        label: "Albums",
-        icon: "mdi:album",
-        results:
-          results?.result.filter(
-            item =>
-              item.media_content_type === "albums" ||
-              item.media_class === "album"
-          ) ?? [],
-      },
-      {
-        type: "tracks",
-        label: "Tracks",
-        icon: "mdi:music-note",
-        results:
-          results?.result.filter(
-            item =>
-              item.media_content_type === "tracks" ||
-              item.media_class === "track"
-          ) ?? [],
-      },
-      {
-        type: "playlists",
-        label: "Playlists",
-        icon: "mdi:playlist-music",
-        results:
-          results?.result.filter(
-            item =>
-              item.media_content_type === "playlists" ||
-              item.media_class === "playlist"
-          ) ?? [],
-      },
-    ];
-  }, [results]);
-
   return useMemo(
-    () => ({ results: resultsParsed, loading, playItem, error }),
+    () => ({ results: results?.result ?? [], loading, playItem, error }),
     [results, loading, error]
   );
 };
