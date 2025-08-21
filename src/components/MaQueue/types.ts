@@ -8,4 +8,3 @@ export interface MaQueueItem {
 }
 
 export type MaQueueResponse = MaQueueItem[];
-

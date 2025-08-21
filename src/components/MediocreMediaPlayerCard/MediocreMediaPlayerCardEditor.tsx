@@ -347,9 +347,7 @@ export const MediocreMediaPlayerCardEditor: FC<
                     field.handleChange((e.target as HTMLInputElement).checked)
                   }
                 />
-                <ToggleLabel htmlFor="queue.enabled">
-                  Enable Queue
-                </ToggleLabel>
+                <ToggleLabel htmlFor="queue.enabled">Enable Queue</ToggleLabel>
               </ToggleContainer>
             )}
           </form.Field>

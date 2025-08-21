@@ -317,44 +317,44 @@ export const MediocreMassiveMediaPlayerCardEditor: FC<
             )}
           </form.Field>
         </FormGroup>
-      <form.Field name="search.media_types">
-        {field => (
-          <HaSearchMediaTypesEditor
-            entityId={config.search?.entity_id ?? config.entity_id ?? ""}
-            hass={hass}
-            mediaTypes={field.state.value ?? []}
-            onChange={value => {
-              field.handleChange(value ?? []);
-            }}
-          />
-        )}
-      </form.Field>
-    </SubForm>
-
-    <SubForm title="Queue (optional)" error={getSubformError("queue")}>
-      <FormGroup>
-        <form.Field name="queue.enabled">
+        <form.Field name="search.media_types">
           {field => (
-            <ToggleContainer>
-              <Toggle
-                type="checkbox"
-                id="queue.enabled"
-                checked={field.state.value ?? false}
-                onChange={e =>
-                  field.handleChange((e.target as HTMLInputElement).checked)
-                }
-              />
-              <ToggleLabel htmlFor="queue.enabled">Enable Queue</ToggleLabel>
-            </ToggleContainer>
+            <HaSearchMediaTypesEditor
+              entityId={config.search?.entity_id ?? config.entity_id ?? ""}
+              hass={hass}
+              mediaTypes={field.state.value ?? []}
+              onChange={value => {
+                field.handleChange(value ?? []);
+              }}
+            />
           )}
         </form.Field>
-      </FormGroup>
-    </SubForm>
+      </SubForm>
 
-    <SubForm
-      title="Music Assistant Configuration (optional)"
-      error={
-        getSubformError("ma_entity_id") ??
+      <SubForm title="Queue (optional)" error={getSubformError("queue")}>
+        <FormGroup>
+          <form.Field name="queue.enabled">
+            {field => (
+              <ToggleContainer>
+                <Toggle
+                  type="checkbox"
+                  id="queue.enabled"
+                  checked={field.state.value ?? false}
+                  onChange={e =>
+                    field.handleChange((e.target as HTMLInputElement).checked)
+                  }
+                />
+                <ToggleLabel htmlFor="queue.enabled">Enable Queue</ToggleLabel>
+              </ToggleContainer>
+            )}
+          </form.Field>
+        </FormGroup>
+      </SubForm>
+
+      <SubForm
+        title="Music Assistant Configuration (optional)"
+        error={
+          getSubformError("ma_entity_id") ??
           getSubformError("ma_favorite_button_entity_id")
         }
       >

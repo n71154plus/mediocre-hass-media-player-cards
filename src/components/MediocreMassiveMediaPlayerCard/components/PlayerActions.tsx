@@ -1,6 +1,12 @@
 import { useCallback, useContext, useState } from "preact/hooks";
 import { css, keyframes } from "@emotion/react";
-import { HaSearch, IconButton, MaQueue, MaSearch, usePlayer } from "@components";
+import {
+  HaSearch,
+  IconButton,
+  MaQueue,
+  MaSearch,
+  usePlayer,
+} from "@components";
 import { CardContext, CardContextType } from "@components/CardContext";
 import { Fragment, ReactNode } from "preact/compat";
 import { VolumeController, VolumeTrigger } from "./VolumeController";
@@ -99,11 +105,7 @@ export const PlayerActions = () => {
   const hasQueue = hasMaSearch && queue?.enabled;
 
   const [selected, setSelected] = useState<
-    | "volume"
-    | "speaker-grouping"
-    | "custom-buttons"
-    | "search"
-    | "queue"
+    "volume" | "speaker-grouping" | "custom-buttons" | "search" | "queue"
   >();
 
   const toggleSelected = useCallback(
