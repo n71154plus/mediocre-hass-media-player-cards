@@ -27,7 +27,7 @@ export const MaQueue = ({
     return <Spinner />;
   }
 
-  if (!queue || queue.items?.length === 0) {
+  if (queue.length === 0) {
     return <p css={searchStyles.mediaEmptyText}>Queue is empty</p>;
   }
 
@@ -37,14 +37,12 @@ export const MaQueue = ({
       style={{ maxHeight }}
     >
       <div css={searchStyles.resultsContainerSearchBarBottom}>
-        {(queue.items ?? []).map(item => (
+        {queue.map(item => (
           <MediaTrack
             key={item.queue_item_id}
-            imageUrl={item.media_item.image ?? item.media_item.album?.image}
-            title={item.media_item.name}
-            artist={item.media_item.artists
-              ?.map(artist => artist.name)
-              .join(", ")}
+            imageUrl={item.media_image}
+            title={item.media_title}
+            artist={item.media_artist}
             onClick={async () => {}}
           />
         ))}

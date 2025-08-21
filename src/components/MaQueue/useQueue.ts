@@ -3,7 +3,7 @@ import { getHass } from "@utils";
 import { MaQueueItem, MaQueueResponse } from "./types";
 
 export const useQueue = (entityId: string) => {
-  const [queue, setQueue] = useState<MaQueueResponse | null>(null);
+  const [queue, setQueue] = useState<MaQueueResponse>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,43 +14,26 @@ export const useQueue = (entityId: string) => {
 
       const hass = getHass();
       try {
+        if (!hass.services?.mass_queue?.get_queue_items) {
+          throw new Error("Service mass_queue.get_queue_items not found");
+        }
+
         const message = {
           type: "call_service",
-          domain: "music_assistant",
-          service: "get_queue",
-          target: { entity_id: entityId },
-          service_data: {},
+          domain: "mass_queue",
+          service: "get_queue_items",
+          service_data: {
+            entity: entityId,
+          },
           return_response: true,
         };
 
         const res = await hass.connection.sendMessagePromise(message);
-        const response = res as { response: Omit<MaQueueResponse, "items"> };
-        if (!response.response) return;
-
-        const { queue_id } = response.response;
-        let items: MaQueueItem[] = [];
-
-        try {
-          const itemsMessage = {
-            type: "call_service",
-            domain: "music_assistant",
-            service: "get_queue_items",
-            service_data: {
-              queue_id,
-              limit: 1000,
-            },
-            return_response: true,
-          };
-          const itemsRes = await hass.connection.sendMessagePromise(itemsMessage);
-          const itemsResponse = itemsRes as { response: { items: MaQueueItem[] } };
-          items = itemsResponse.response?.items ?? [];
-        } catch (e) {
-          console.error("Error fetching queue items:", e);
-        }
-
-        setQueue({ ...response.response, items });
+        const response = res as { response: Record<string, MaQueueItem[]> };
+        const items = response.response?.[entityId] ?? [];
+        setQueue(items);
       } catch (e) {
-        console.error("Error fetching queue:", e);
+        console.error("Error fetching queue items:", e);
       } finally {
         setLoading(false);
       }

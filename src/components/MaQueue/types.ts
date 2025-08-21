@@ -1,18 +1,11 @@
 export interface MaQueueItem {
   queue_item_id: string;
-  name: string;
-  media_item: {
-    name: string;
-    image?: string | null;
-    album?: { image?: string | null };
-    artists?: { name: string }[];
-  };
+  media_title: string;
+  media_album_name?: string;
+  media_artist?: string;
+  media_content_id?: string;
+  media_image?: string;
 }
 
-export interface MaQueueResponse {
-  queue_id: string;
-  current_item: MaQueueItem | null;
-  next_item: MaQueueItem | null;
-  items?: MaQueueItem[];
-}
+export type MaQueueResponse = MaQueueItem[];
 
