@@ -1,6 +1,6 @@
 # Queue Functionality with Mediocre Media Player Cards
 
-The Mediocre Media Player Cards can display the current playback queue when used with Music Assistant.
+The Mediocre Media Player Cards can display the current playback queue when used with Music Assistant. To enable this feature, first install the [`mass_queue`](https://github.com/droans/mass_queue) custom component for Home Assistant, which exposes Music Assistant's queue to Home Assistant.
 
 ## Configuration Example
 
@@ -20,4 +20,3 @@ queue:
 - `queue.enabled`: Set to `true` to show the current queue in the card.
 
 Once configured, the card will display a queue button that opens the list of upcoming items, similar to the search interface.
-
