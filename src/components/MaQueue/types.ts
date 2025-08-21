@@ -10,6 +10,9 @@ export interface MaQueueItem {
 }
 
 export interface MaQueueResponse {
-  items: MaQueueItem[];
+  queue_id: string;
+  current_item: MaQueueItem | null;
+  next_item: MaQueueItem | null;
+  items?: MaQueueItem[];
 }
 
