@@ -7,7 +7,7 @@
 
 <img src="https://github.com/user-attachments/assets/2ba5d55d-6fd3-4508-ae1c-60d9f22ebe81" width="500px" alt="Mediocre Media Player Card Screenshot 1" />
 
-Media player cards for Home Assistant that let you group speakers, add custom action buttons, search for music and more. A visual editor is available for all media player card configuration options.
+Media player cards for Home Assistant that let you group speakers, add custom action buttons, search for music, view queues and more. A visual editor is available for all media player card configuration options.
 
 > **Note:** This is a pretty new project, so you might encounter some bugs. If you do, please do report them.
 
@@ -48,7 +48,7 @@ resources:
 
 ### Mediocre Media Player Card
 
-A standard-sized media player card. Supports grouping speakers (including volume management), custom action buttons, and search (when used with Music Assistant).
+A standard-sized media player card. Supports grouping speakers (including volume management), custom action buttons, and search and queue (when used with Music Assistant).
 
 <img src="https://github.com/user-attachments/assets/a4ad8f2c-aafe-424f-9626-ff3353cbd605" width="500px" alt="Mediocre Media Player Card Screenshot 2" />
 
@@ -66,7 +66,7 @@ speaker_group:
 
 ### Mediocre Massive Media Player Card
 
-A full-sized media player card. Just like the regular card it supports grouping speakers (including volume management), custom action buttons, and search (when used with Music Assistant). In fact they share most of the configuration options.
+A full-sized media player card. Just like the regular card it supports grouping speakers (including volume management), custom action buttons, and search and queue (when used with Music Assistant). In fact they share most of the configuration options.
 
 <img src="https://github.com/user-attachments/assets/793f9b8f-032b-4309-b8ef-1f38935e448a" width="500px" alt="Mediocre Massive Media Player Card Screenshot" />
 
@@ -94,7 +94,7 @@ Both cards support these options:
 | `speaker_group.entity_id` | string | -        | Entity ID of the main speaker if different from the media player |
 | `speaker_group.entities`  | array  | -        | List of entity IDs that can be grouped with the main speaker     |
 | `custom_buttons`          | array  | -        | List of custom buttons to display                                |
-| `ma_entity_id`            | string | -        | Music Assistant entity id (adds search)                          |
+| `ma_entity_id`            | string | -        | Music Assistant entity id (adds search & queue features)         |
 | `ma_favorite_button_entity_id` | string | - | Music Assistant favorite button entity (shows a heart-plus button to mark the current song as favorite) |
 | `options`                 | object | -        | Additional display options for fine-tuning the card              |
 | `options.always_show_power_button` | boolean | `false` | Always show the power button, even if the media player is on |
@@ -192,10 +192,15 @@ entities:
 
 Both the Mediocre Media Player Card and the Mediocre Massive Media Player Card support search functionality. By specifying a `ma_entity_id`, you can enable Music Assistant-specific search features directly within the card. Alternatively, enabling the `search.enabled` option will use the regular Home Assistant `search_media` functionality. Read more about configuring the cards for search [here](./docs/README_SEARCH.md).
 
+## Queue Functionality
+
+When a `ma_entity_id` is specified and `queue.enabled` is set to `true`, the cards can display the current playback queue from Music Assistant. Read more about configuring the cards for queue support [here](./docs/README_QUEUE.md).
+
 ## Additional Documentation
 
 - [Using Universal Media Player with Mediocre Media Player Cards](./docs/README_UMP.md)
 - [Search Functionality with Mediocre Media Player Cards](./docs/README_SEARCH.md)
+- [Queue Functionality with Mediocre Media Player Cards](./docs/README_QUEUE.md)
 
 ## Troubleshooting
 
