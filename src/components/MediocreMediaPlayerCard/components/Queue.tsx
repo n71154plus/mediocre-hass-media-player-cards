@@ -28,4 +28,3 @@ export const Queue = () => {
     </div>
   );
 };
-
