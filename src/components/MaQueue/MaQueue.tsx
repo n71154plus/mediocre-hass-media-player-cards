@@ -27,7 +27,7 @@ export const MaQueue = ({
     return <Spinner />;
   }
 
-  if (!queue || queue.items.length === 0) {
+  if (!queue || queue.items?.length === 0) {
     return <p css={searchStyles.mediaEmptyText}>Queue is empty</p>;
   }
 
@@ -37,7 +37,7 @@ export const MaQueue = ({
       style={{ maxHeight }}
     >
       <div css={searchStyles.resultsContainerSearchBarBottom}>
-        {queue.items.map(item => (
+        {(queue.items ?? []).map(item => (
           <MediaTrack
             key={item.queue_item_id}
             imageUrl={item.media_item.image ?? item.media_item.album?.image}
