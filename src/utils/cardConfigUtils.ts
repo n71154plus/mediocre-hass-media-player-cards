@@ -35,6 +35,7 @@ export const getDefaultValuesFromConfig = (
       config?.options?.always_show_power_button ?? false,
     always_show_custom_buttons:
       config?.options?.always_show_custom_buttons ?? false,
+    volume_control: config?.options?.volume_control ?? "slider",
   },
   grid_options: config?.grid_options,
   visibility: config?.visibility,
@@ -70,6 +71,7 @@ export const getDefaultValuesFromMassiveConfig = (
   options: {
     always_show_power_button:
       config?.options?.always_show_power_button ?? false,
+    volume_control: config?.options?.volume_control ?? "slider",
   },
   grid_options: config?.grid_options,
   visibility: config?.visibility,
@@ -137,6 +139,9 @@ export const getSimpleConfigFromFormValues = (
   }
   if (config.options?.always_show_custom_buttons === false) {
     delete config.options.always_show_custom_buttons;
+  }
+  if (config.options?.volume_control === "slider") {
+    delete config.options.volume_control;
   }
   if (Object.keys(config.options ?? {}).length === 0) {
     delete config.options;
@@ -208,7 +213,10 @@ export const getSimpleConfigFromMassiveFormValues = (
   if (config.options?.always_show_power_button === false) {
     delete config.options.always_show_power_button;
   }
-  if (!config.options?.always_show_power_button) {
+  if (config.options?.volume_control === "slider") {
+    delete config.options.volume_control;
+  }
+  if (Object.keys(config.options ?? {}).length === 0) {
     delete config.options;
   }
 

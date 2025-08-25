@@ -1,6 +1,13 @@
-import { useCallback, useMemo } from "preact/hooks";
-import { IconButton, Slider, usePlayer } from "@components";
+import { useCallback, useContext, useMemo } from "preact/hooks";
+import {
+  IconButton,
+  Slider,
+  usePlayer,
+  CardContext,
+  CardContextType,
+} from "@components";
 import { getHass, getVolumeIcon } from "@utils";
+import type { MediocreMassiveMediaPlayerCardConfig } from "@types";
 import { css } from "@emotion/react";
 
 const styles = {
@@ -18,6 +25,12 @@ const styles = {
 };
 
 export const VolumeController = () => {
+  const { config } =
+    useContext<
+      CardContextType<MediocreMassiveMediaPlayerCardConfig>
+    >(CardContext);
+  const volumeControl = config.options?.volume_control ?? "slider";
+
   const player = usePlayer();
 
   const entity_id = player.entity_id;
@@ -46,6 +59,16 @@ export const VolumeController = () => {
     [volume, volumeMuted]
   );
 
+  const handleVolumeUp = useCallback(() => {
+    const newVolume = Math.min(volume + 0.05, 1);
+    handleVolumeChange(newVolume);
+  }, [volume, handleVolumeChange]);
+
+  const handleVolumeDown = useCallback(() => {
+    const newVolume = Math.max(volume - 0.05, 0);
+    handleVolumeChange(newVolume);
+  }, [volume, handleVolumeChange]);
+
   return (
     <div css={styles.root}>
       <IconButton
@@ -54,14 +77,21 @@ export const VolumeController = () => {
         onClick={handleToggleMute}
         icon={VolumeIcon}
       />
-      <Slider
-        min={0}
-        max={1}
-        step={0.01}
-        value={volume}
-        sliderSize={"large"}
-        onChange={handleVolumeChange}
-      />
+      {volumeControl === "buttons" ? (
+        <>
+          <IconButton size="small" onClick={handleVolumeDown} icon={"mdi:minus"} />
+          <IconButton size="small" onClick={handleVolumeUp} icon={"mdi:plus"} />
+        </>
+      ) : (
+        <Slider
+          min={0}
+          max={1}
+          step={0.01}
+          value={volume}
+          sliderSize={"large"}
+          onChange={handleVolumeChange}
+        />
+      )}
     </div>
   );
 };
