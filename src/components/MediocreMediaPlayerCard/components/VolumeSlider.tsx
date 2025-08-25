@@ -68,8 +68,16 @@ export const VolumeSlider = () => {
       <IconButton size="x-small" onClick={handleToggleMute} icon={VolumeIcon} />
       {volumeControl === "buttons" ? (
         <Fragment>
-          <IconButton size="x-small" onClick={handleVolumeDown} icon={"mdi:minus"} />
-          <IconButton size="x-small" onClick={handleVolumeUp} icon={"mdi:plus"} />
+          <IconButton
+            size="x-small"
+            onClick={handleVolumeDown}
+            icon={"mdi:minus"}
+          />
+          <IconButton
+            size="x-small"
+            onClick={handleVolumeUp}
+            icon={"mdi:plus"}
+          />
         </Fragment>
       ) : (
         <Slider

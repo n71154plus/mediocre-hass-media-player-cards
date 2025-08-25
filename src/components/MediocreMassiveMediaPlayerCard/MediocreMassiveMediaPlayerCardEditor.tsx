@@ -511,7 +511,9 @@ export const MediocreMassiveMediaPlayerCardEditor: FC<
                 selected={field.state.value ?? "slider"}
                 onSelected={value =>
                   field.handleChange(
-                    value as MediocreMassiveMediaPlayerCardConfig["options"]["volume_control"]
+                    value as NonNullable<
+                      MediocreMassiveMediaPlayerCardConfig["options"]
+                    >["volume_control"]
                   )
                 }
               />

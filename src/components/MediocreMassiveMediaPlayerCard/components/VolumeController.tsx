@@ -26,9 +26,9 @@ const styles = {
 
 export const VolumeController = () => {
   const { config } =
-    useContext<
-      CardContextType<MediocreMassiveMediaPlayerCardConfig>
-    >(CardContext);
+    useContext<CardContextType<MediocreMassiveMediaPlayerCardConfig>>(
+      CardContext
+    );
   const volumeControl = config.options?.volume_control ?? "slider";
 
   const player = usePlayer();
@@ -79,7 +79,11 @@ export const VolumeController = () => {
       />
       {volumeControl === "buttons" ? (
         <>
-          <IconButton size="small" onClick={handleVolumeDown} icon={"mdi:minus"} />
+          <IconButton
+            size="small"
+            onClick={handleVolumeDown}
+            icon={"mdi:minus"}
+          />
           <IconButton size="small" onClick={handleVolumeUp} icon={"mdi:plus"} />
         </>
       ) : (
