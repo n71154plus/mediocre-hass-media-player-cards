@@ -1,7 +1,14 @@
-import { useCallback, useMemo } from "preact/hooks";
-import { IconButton, Slider, usePlayer } from "@components";
+import { useCallback, useContext, useMemo } from "preact/hooks";
+import {
+  IconButton,
+  Slider,
+  usePlayer,
+  CardContext,
+  CardContextType,
+} from "@components";
 import { Fragment } from "preact/jsx-runtime";
 import { getHass, getVolumeIcon } from "@utils";
+import type { MediocreMediaPlayerCardConfig } from "@types";
 import { css } from "@emotion/react";
 
 const styles = {
@@ -15,6 +22,10 @@ const styles = {
 };
 
 export const VolumeSlider = () => {
+  const { config } =
+    useContext<CardContextType<MediocreMediaPlayerCardConfig>>(CardContext);
+  const volumeControl = config.options?.volume_control ?? "slider";
+
   const player = usePlayer();
   const entity_id = player.entity_id;
   const volume = player.attributes?.volume_level ?? 0;
@@ -42,17 +53,42 @@ export const VolumeSlider = () => {
     [volume, volumeMuted]
   );
 
+  const handleVolumeUp = useCallback(() => {
+    const newVolume = Math.min(volume + 0.05, 1);
+    handleVolumeChange(newVolume);
+  }, [volume, handleVolumeChange]);
+
+  const handleVolumeDown = useCallback(() => {
+    const newVolume = Math.max(volume - 0.05, 0);
+    handleVolumeChange(newVolume);
+  }, [volume, handleVolumeChange]);
+
   return (
     <div css={styles.root}>
       <IconButton size="x-small" onClick={handleToggleMute} icon={VolumeIcon} />
-      <Slider
-        min={0}
-        max={1}
-        step={0.01}
-        value={volume}
-        sliderSize={"small"}
-        onChange={handleVolumeChange}
-      />
+      {volumeControl === "buttons" ? (
+        <Fragment>
+          <IconButton
+            size="x-small"
+            onClick={handleVolumeDown}
+            icon={"mdi:minus"}
+          />
+          <IconButton
+            size="x-small"
+            onClick={handleVolumeUp}
+            icon={"mdi:plus"}
+          />
+        </Fragment>
+      ) : (
+        <Slider
+          min={0}
+          max={1}
+          step={0.01}
+          value={volume}
+          sliderSize={"small"}
+          onChange={handleVolumeChange}
+        />
+      )}
     </div>
   );
 };

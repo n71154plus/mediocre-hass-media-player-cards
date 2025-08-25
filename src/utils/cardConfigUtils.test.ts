@@ -86,6 +86,7 @@ describe("cardConfigUtils", () => {
       expect(result.options).toEqual({
         always_show_power_button: false,
         always_show_custom_buttons: false,
+        volume_control: "slider",
       });
       expect(result.grid_options).toBeUndefined();
     });
@@ -116,6 +117,7 @@ describe("cardConfigUtils", () => {
         options: {
           always_show_power_button: true,
           always_show_custom_buttons: true,
+          volume_control: "buttons",
         },
         grid_options: { columns: "full" },
       };
@@ -205,6 +207,7 @@ describe("cardConfigUtils", () => {
       expect(result.custom_buttons).toEqual([]);
       expect(result.options).toEqual({
         always_show_power_button: false,
+        volume_control: "slider",
       });
       expect(result.grid_options).toBeUndefined();
     });
@@ -226,6 +229,7 @@ describe("cardConfigUtils", () => {
         options: {
           always_show_power_button: false,
           always_show_custom_buttons: false,
+          volume_control: "slider",
         },
         grid_options: {},
       };
@@ -251,6 +255,7 @@ describe("cardConfigUtils", () => {
         options: {
           always_show_power_button: false,
           always_show_custom_buttons: false,
+          volume_control: "slider",
         },
         grid_options: {
           columns: "full",
@@ -282,6 +287,7 @@ describe("cardConfigUtils", () => {
         options: {
           always_show_power_button: false,
           always_show_custom_buttons: false,
+          volume_control: "slider",
         },
       };
 
@@ -305,6 +311,7 @@ describe("cardConfigUtils", () => {
         options: {
           always_show_power_button: false,
           always_show_custom_buttons: false,
+          volume_control: "slider",
         },
         grid_options: { columns: "full" },
       };
@@ -333,7 +340,10 @@ describe("cardConfigUtils", () => {
         queue: { enabled: false },
         ma_entity_id: null,
         custom_buttons: [],
-        options: { always_show_power_button: false },
+        options: {
+          always_show_power_button: false,
+          volume_control: "slider",
+        },
         grid_options: {},
       };
 
@@ -357,7 +367,10 @@ describe("cardConfigUtils", () => {
         queue: { enabled: false },
         ma_entity_id: null,
         custom_buttons: [],
-        options: { always_show_power_button: false },
+        options: {
+          always_show_power_button: false,
+          volume_control: "slider",
+        },
         grid_options: {
           columns: "full",
           rows: 2,
@@ -387,7 +400,10 @@ describe("cardConfigUtils", () => {
         queue: { enabled: false },
         ma_entity_id: null,
         custom_buttons: [],
-        options: { always_show_power_button: false },
+        options: {
+          always_show_power_button: false,
+          volume_control: "slider",
+        },
         grid_options: { columns: "full" },
       };
 

@@ -499,6 +499,27 @@ export const MediocreMassiveMediaPlayerCardEditor: FC<
             </ToggleContainer>
           )}
         </form.Field>
+        <form.Field name="options.volume_control">
+          {field => (
+            <FormGroup>
+              <Label>Volume control style</Label>
+              <FormSelect
+                options={[
+                  { name: "Slider", value: "slider" },
+                  { name: "Buttons", value: "buttons" },
+                ]}
+                selected={field.state.value ?? "slider"}
+                onSelected={value =>
+                  field.handleChange(
+                    value as NonNullable<
+                      MediocreMassiveMediaPlayerCardConfig["options"]
+                    >["volume_control"]
+                  )
+                }
+              />
+            </FormGroup>
+          )}
+        </form.Field>
       </SubForm>
     </form>
   );
